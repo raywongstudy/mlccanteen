@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  	<title>MLC Canteen</title>
+  	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    
+
+<div id="app">
+<!--   <button @click="showTheData">chick</button> -->
+  <ul class="data-style">
+  	<h1 style="text-align:center">最近到飯堂食飯的100人</h1>
+    <h1 v-if="loading">Loading...</h1>
+    <li v-for="item in items">
+      <div class="data-block">
+        <p>加密後ID : {{item.hashID}}</p>
+        <p>居住書院 : {{item.rcMember}}</p>
+        <p>食飯地點 : {{item.consumptionLocation}}</p>
+        <p>拍卡食飯時間 : {{item.consumeTime}}</p>
+        <p>類型 : {{item.mealType}}</p>
+      </div>
+    </li>
+  </ul>
+
+
+</div>
+
+
+<style type="text/css">
+	
+
+	.data-style{
+	  list-style:none;
+	  margin:0 auto;
+
+	  max-width:500px;
+	}
+
+	.data-style li:hover{
+		background-color:darkgray;
+		color:white;
+	}
+
+	.data-style li{
+	  box-shadow:1px 1px 2px 1px #ccc;
+	  padding:10px;
+	  border-radius:5px;
+	  margin:5px 0px;
+
+	  cursor: pointer;
+	}
+
+	.data-style li > div > *{
+	  padding:4px 0;
+	  margin:0px;
+	}
+
+</style>
+
+
+
+<script type="text/javascript">
+	
+
+new Vue({
+  el: '#app',
+  data () {
+    return {
+      items: {},
+      loading:true
+    }
+  },
+  mounted () {
+    var _this = this;
+     fetch('https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC',{
+        headers: {
+              Authorization: 'Bearer dc441188-d713-3496-976c-953bda5520cd',
+              Accept: 'application/json'
+          }
+      })
+        .then(function(response) {
+          return response.json()
+          // return response.text(); //return 的值到下一個then
+        })
+  //     console log the request
+        .then(function(text) {
+          _this.items = text._embedded; 
+          _this.loading = false;
+          // console.log('Request successful', text._embedded);
+        })
+  //     check error
+        .catch(function(error) {
+          console.log('Request failed', error)
+        })
+  },
+  methods:{
+    showTheData:function(){
+      console.log(this.loading)
+    }
+  }
+  
+  
+})
+
+
+</script>
+
+
+</body>
+</html>
