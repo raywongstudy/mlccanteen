@@ -4,30 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
   	<title>MLC Canteen</title>
   	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
     
 
-  <div id="app1">
+  <div id="app">
     <div class="getDataButton">
-      <a href="#" @click="getNowData">測驗</a>
+      <a href="#" @click="testFounction">測試1</a>
       <a href="#" @click="getRecently">最近1分鐘資料</a>
       <a href="#" @click="getMlcData">最近100個資料</a>
-      <a href="#" @click="getDelayTime(12,10,50)">測試</a>
+      <a href="#" @click="getPeopleValue">現時飯堂人數</a>
     </div>
     <h1 style="text-align:center">MLC飯堂數據</h1> 
     <ul class="data-style">
       <h1 v-if="loading">Loading...</h1>
-       <h3>數據:{{items_length}}條</h3>
-      <li v-for="item in items" v-if="refresh">
+       <h3 v-if="showData">數據:{{items_length}}條</h3>
+      <li v-for="item in items" v-if="showData" style="display:block">
         <div class="data-block">
-          <p>加密後ID : {{item.hashID}}</p>
+          <!-- <p>加密後ID : {{item.hashID}}</p> -->
+          <p>某人</p>
           <p>居住書院 : {{item.rcMember}}</p>
           <p>食飯地點 : {{item.consumptionLocation}}</p>
-          <p>拍卡食飯時間 : {{item.consumeTime}}</p>
+          <p>拍卡食飯時間 : {{item.consumeTime_}}</p>
           <p>類型 : {{item.mealType}}</p>
         </div>
       </li>
@@ -35,141 +35,140 @@
   
   
   </div>
+  
+  <div id="app1">
+    <ul>
+      <li v-for="item in items">
+        <!-- {{item}} -->
+      </li>
+    </ul>
+  </div>
 
 
+<!-- -----------------------------------------style----------------------------------------- -->
 <style type="text/css">
 	
 
 
   .data-style{
-    list-style:none;
-    
-  /*   max-height:75vh;
-    overflow:auto; */
-    padding:15px;
-    box-shadow:1px 1px 1px 1px #ccc;
-    border-radius:5px;
-  }
+  list-style:none;
+  
+/*   max-height:75vh;
+  overflow:auto; */
+  padding:15px;
+  box-shadow:1px 1px 1px 1px #ccc;
+  border-radius:5px;
+}
 
-  .data-style li:hover{
-    background-color:darkgray;
-    color:white;
-  }
+.data-style li:hover{
+  background-color:darkgray;
+  color:white;
+}
 
-  .data-style li{
-    box-shadow:1px 1px 2px 1px #ccc;
-    padding:10px;
-    border-radius:5px;
-    margin:5px 0px;
+.data-style li{
+  box-shadow:1px 1px 2px 1px #ccc;
+  padding:10px;
+  border-radius:5px;
+  margin:5px 0px;
 
-    cursor: pointer;
-  }
+  cursor: pointer;
+}
 
-  .data-style li > div > *{
-    padding:4px 0;
-    margin:0px;
-  }
+.data-style li > div > *{
+  padding:4px 0;
+  margin:0px;
+}
 
-  .getDataButton{
-    box-shadow:1px 1px 2px 1px #ccc;
+.getDataButton{
+  box-shadow:1px 1px 2px 1px #ccc;
 
-    border-radius:1px;
+  border-radius:1px;
+  margin:0 auto;
+  
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-around;
+}
+
+.getDataButton a{
+  text-decoration:none;
+  color:black;
+  padding:10px;
+  font-size:1em;
+}
+
+
+@media screen and (min-width:500px){
+  
+
+  .data-style{
     margin:0 auto;
-    
+    max-width:500px;
+
+  }
+  .getDataButton button{
+    padding:10px;
+    font-size:1em;
+  }
+  
+  .getDataButton{
+    max-width:500px;
+    margin:0 auto;
+
     display:flex;
     flex-wrap:wrap;
     justify-content:space-around;
   }
-
-  .getDataButton a{
-    text-decoration:none;
-    color:black;
-    padding:10px;
-    font-size:1em;
-  }
-
-
-  @media screen and (min-width:500px){
-    
-
-    .data-style{
-      margin:0 auto;
-      max-width:500px;
-
-    }
-    .getDataButton button{
-      padding:10px;
-      font-size:1em;
-    }
-    
-    .getDataButton{
-      max-width:500px;
-      margin:0 auto;
-
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:space-around;
-    }
-  }
+}
 
 </style>
 
 
 
+
+
+
+
+
+
+
+<!-- -----------------------------------------script----------------------------------------- -->
 <script type="text/javascript">
 	
+
   var app = new Vue({
-  el: '#app1',
+  el: '#app',
   data () {
     return {
       items: {},
-      loading:true,
-      refresh:false,
+      loading:false,
+      showData:false,
       items_length:0,
     }
   },
-  mounted () {
-    var _this = this;
-     fetch('https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC',{
-        headers: {
-              Authorization: 'Bearer dc441188-d713-3496-976c-953bda5520cd',
-              Accept: 'application/json'
-          }
-      })
-        .then(function(response) {
-          return response.json()
-          // return response.text(); //return 的值到下一個then
-        })
-  //     console log the request
-        .then(function(text) {
-          _this.items = text._embedded; 
-          _this.loading = false;
-          _this.refresh = true;
-          _this.items_length = _this.items.length;
-          // console.log('Request successful', text._embedded);
-        })
-  //     check error
-        .catch(function(error) {
-          console.log('Request failed', error);
-          if(_this.items == undefined){
-             _this.items_length = 0;
-          }
-        })
-  },
   methods:{
-//     Here is 
-    getRecently:function(){
-      path = this.getNowData();
+    testFounction:function(){
+      console.log(this.items)
+    },
+    getPeopleValue:function(){
+      path = this.getTimeData();
+      console.log(path[1]+' and '+path[2]);
+      this.getApiData('https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC&consume_date_from='+path[2]+'&consume_date_to='+path[0]);
+    },
+// just get the recently 1 minute data
+    getRecently:function() {
+      path = this.getTimeData();
       this.getApiData('https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC&consume_date_from='+path[1]+'&consume_date_to='+path[0]);
     },
-// 
+// just get mlc data
     getMlcData:function(){
  this.getApiData('https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC');
     },
+// 
     getApiData:function(path){
       var _this = this;
       this.loading = true;
-      this.refresh = false;
+      this.showData = false;
       fetch(path,{
         headers: {
           Authorization: 'Bearer dc441188-d713-3496-976c-953bda5520cd',
@@ -180,11 +179,11 @@
           return response.json()
           // return response.text(); //return 的值到下一個then
         })
-  //     console log the request
         .then(function(text) {
           _this.items = text._embedded; 
+          _this.items = app1.shortingData(_this.items)
           _this.loading = false;
-          _this.refresh = true;
+          _this.showData = true;
           _this.items_length = _this.items.length;
           
           // console.log('Request successful', text._embedded);
@@ -194,18 +193,21 @@
           console.log('Request failed', error)
           if(_this.items == undefined){
           _this.items_length = 0;
+          _this.loading = false;
+          _this.showData = true;
           }
         });
     },
-//     Here is use to for get the real time
-    addZero:function(number){
+//     Here is use to for get the zero to the time number
+    addZero:(number)=>{
           if(number < 10){
             let result = '0'+number
             return result;
           }
             return number;
         },
-    getNowData:function(delay_seconds){
+//  Here is use to get now time and delay time
+    getTimeData:function(delay_seconds){
       var d = new Date();
       var date = this.addZero(d.getDate());
       var year = d.getFullYear();
@@ -218,8 +220,11 @@
 //       delay time
       var delay_t = this.getDelayTime(hours,minutes,seconds,60);
       var full_delay_t = `${year}-${month}-${date}T${delay_t[0]}%3A${delay_t[1]}%3A${delay_t[2]}%2B08%3A00`;
-      return [full_t,full_delay_t];
+      var delay_t2 = this.getDelayTime(hours,minutes,seconds,1800);
+      var full_delay_t2 = `${year}-${month}-${date}T${delay_t2[0]}%3A${delay_t2[1]}%3A${delay_t2[2]}%2B08%3A00`;
+      return [full_t,full_delay_t,full_delay_t2];
     },
+//  Here is use to get the delay time
     getDelayTime:function(hour,minute,second,delay_t){
       hour = hour *3600;
       minute = minute * 60;
@@ -236,6 +241,54 @@
   
 })
 
+
+var app1 = new Vue({
+  el:'#app1',
+  data:{
+  },
+  methods:{
+    shortingData:(all_data)=>{
+      let year_,month_,day_,hour_,minute_,second_,all_time_,temp,data_obj = [];
+      
+      for(let i = 0;i < all_data.length;i++){
+        
+        temp = all_data[i].lastModifiedDate;
+
+        for(let j = 0;j < temp.length;j++){
+          year_ = parseInt(temp[0]+temp[1]+temp[2]+temp[3])
+          month_ = parseInt(temp[5]+temp[6]);
+          day_ = parseInt(temp[8]+temp[9]);
+          hour_ = app.addZero(parseInt(temp[11]+temp[12]));
+          minute_ = app.addZero(parseInt(temp[14]+temp[15]));
+          second_ = app.addZero(parseInt(temp[17]+temp[18]));
+          
+          all_time_ = (hour_ * 3600) + (minute_ * 60) + second_; 
+          // data_obj[i] = {hour:hour,minute:minute,second=second}
+          all_data[i].shorting_n = all_time_;
+          all_data[i].consumeTime_ = `${year_}年${month_}月${day_}日${hour_}:${minute_}:${second_}`;
+        }//for j end
+        
+      }//end for i
+      let count_k,count_h,change;
+
+      for(let k = 0; k < all_data.length; k++){
+        count_h = all_data.length - 1 - k;
+        for(let h = 0; h < count_h; h++){
+          if(all_data[h].shorting_n < all_data[h+1].shorting_n){
+            change = all_data[h];
+            all_data[h] = all_data[h+1];
+            all_data[h+1] = change;
+          }
+        }
+      }// Here is k for end
+      return all_data;
+    },//shorting function end
+    
+  }//methods end
+  
+  
+  
+})
 
 </script>
 
