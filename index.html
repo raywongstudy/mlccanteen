@@ -10,54 +10,106 @@
 <body>
     
 
-<div id="app">
-<!--   <button @click="showTheData">chick</button> -->
-  <ul class="data-style">
-  	<h1 style="text-align:center">最近到飯堂食飯的100人</h1>
-    <h1 v-if="loading">Loading...</h1>
-    <li v-for="item in items">
-      <div class="data-block">
-        <p>加密後ID : {{item.hashID}}</p>
-        <p>居住書院 : {{item.rcMember}}</p>
-        <p>食飯地點 : {{item.consumptionLocation}}</p>
-        <p>拍卡食飯時間 : {{item.consumeTime}}</p>
-        <p>類型 : {{item.mealType}}</p>
-      </div>
-    </li>
-  </ul>
-
-
-</div>
+  <div id="app1">
+    <div class="getDataButton">
+      <a href="#" @click="getNowData">測驗</a>
+      <a href="#" @click="getRecently">最近1分鐘資料</a>
+      <a href="#" @click="getMlcData">最近100個資料</a>
+      <a href="#" @click="getDelayTime(12,10,50)">測試</a>
+    </div>
+    <h1 style="text-align:center">MLC飯堂數據</h1> 
+    <ul class="data-style">
+      <h1 v-if="loading">Loading...</h1>
+       <h3>數據:{{items_length}}條</h3>
+      <li v-for="item in items" v-if="refresh">
+        <div class="data-block">
+          <p>加密後ID : {{item.hashID}}</p>
+          <p>居住書院 : {{item.rcMember}}</p>
+          <p>食飯地點 : {{item.consumptionLocation}}</p>
+          <p>拍卡食飯時間 : {{item.consumeTime}}</p>
+          <p>類型 : {{item.mealType}}</p>
+        </div>
+      </li>
+    </ul>
+  
+  
+  </div>
 
 
 <style type="text/css">
 	
 
-	.data-style{
-	  list-style:none;
-	  margin:0 auto;
 
-	  max-width:500px;
-	}
+  .data-style{
+    list-style:none;
+    
+  /*   max-height:75vh;
+    overflow:auto; */
+    padding:15px;
+    box-shadow:1px 1px 1px 1px #ccc;
+    border-radius:5px;
+  }
 
-	.data-style li:hover{
-		background-color:darkgray;
-		color:white;
-	}
+  .data-style li:hover{
+    background-color:darkgray;
+    color:white;
+  }
 
-	.data-style li{
-	  box-shadow:1px 1px 2px 1px #ccc;
-	  padding:10px;
-	  border-radius:5px;
-	  margin:5px 0px;
+  .data-style li{
+    box-shadow:1px 1px 2px 1px #ccc;
+    padding:10px;
+    border-radius:5px;
+    margin:5px 0px;
 
-	  cursor: pointer;
-	}
+    cursor: pointer;
+  }
 
-	.data-style li > div > *{
-	  padding:4px 0;
-	  margin:0px;
-	}
+  .data-style li > div > *{
+    padding:4px 0;
+    margin:0px;
+  }
+
+  .getDataButton{
+    box-shadow:1px 1px 2px 1px #ccc;
+
+    border-radius:1px;
+    margin:0 auto;
+    
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-around;
+  }
+
+  .getDataButton a{
+    text-decoration:none;
+    color:black;
+    padding:10px;
+    font-size:1em;
+  }
+
+
+  @media screen and (min-width:500px){
+    
+
+    .data-style{
+      margin:0 auto;
+      max-width:500px;
+
+    }
+    .getDataButton button{
+      padding:10px;
+      font-size:1em;
+    }
+    
+    .getDataButton{
+      max-width:500px;
+      margin:0 auto;
+
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-around;
+    }
+  }
 
 </style>
 
@@ -65,13 +117,14 @@
 
 <script type="text/javascript">
 	
-
-new Vue({
-  el: '#app',
+  var app = new Vue({
+  el: '#app1',
   data () {
     return {
       items: {},
-      loading:true
+      loading:true,
+      refresh:false,
+      items_length:0,
     }
   },
   mounted () {
@@ -90,17 +143,93 @@ new Vue({
         .then(function(text) {
           _this.items = text._embedded; 
           _this.loading = false;
+          _this.refresh = true;
+          _this.items_length = _this.items.length;
+          // console.log('Request successful', text._embedded);
+        })
+  //     check error
+        .catch(function(error) {
+          console.log('Request failed', error);
+          if(_this.items == undefined){
+             _this.items_length = 0;
+          }
+        })
+  },
+  methods:{
+//     Here is 
+    getRecently:function(){
+      path = this.getNowData();
+      this.getApiData('https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC&consume_date_from='+path[1]+'&consume_date_to='+path[0]);
+    },
+// 
+    getMlcData:function(){
+ this.getApiData('https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC');
+    },
+    getApiData:function(path){
+      var _this = this;
+      this.loading = true;
+      this.refresh = false;
+      fetch(path,{
+        headers: {
+          Authorization: 'Bearer dc441188-d713-3496-976c-953bda5520cd',
+          Accept: 'application/json'
+          }
+      })
+        .then(function(response) {
+          return response.json()
+          // return response.text(); //return 的值到下一個then
+        })
+  //     console log the request
+        .then(function(text) {
+          _this.items = text._embedded; 
+          _this.loading = false;
+          _this.refresh = true;
+          _this.items_length = _this.items.length;
+          
           // console.log('Request successful', text._embedded);
         })
   //     check error
         .catch(function(error) {
           console.log('Request failed', error)
-        })
-  },
-  methods:{
-    showTheData:function(){
-      console.log(this.loading)
+          if(_this.items == undefined){
+          _this.items_length = 0;
+          }
+        });
+    },
+//     Here is use to for get the real time
+    addZero:function(number){
+          if(number < 10){
+            let result = '0'+number
+            return result;
+          }
+            return number;
+        },
+    getNowData:function(delay_seconds){
+      var d = new Date();
+      var date = this.addZero(d.getDate());
+      var year = d.getFullYear();
+      var month = this.addZero(d.getMonth()+1);
+      var hours = this.addZero(d.getHours());
+      var minutes = this.addZero(d.getMinutes());
+      var seconds = this.addZero(d.getSeconds()); 
+//       full now time
+      var full_t = `${year}-${month}-${date}-T${hours}%3A${minutes}%3A${seconds}%2B08%3A00`;
+//       delay time
+      var delay_t = this.getDelayTime(hours,minutes,seconds,60);
+      var full_delay_t = `${year}-${month}-${date}T${delay_t[0]}%3A${delay_t[1]}%3A${delay_t[2]}%2B08%3A00`;
+      return [full_t,full_delay_t];
+    },
+    getDelayTime:function(hour,minute,second,delay_t){
+      hour = hour *3600;
+      minute = minute * 60;
+      let all_count = hour + minute + second;
+      all_count = all_count - delay_t;
+      hour = Math.floor(all_count / 3600);      
+      minute = Math.floor(all_count % 3600 / 60);
+      second = all_count % 3600 % 60;
+      return[hour,minute,second];
     }
+    
   }
   
   
