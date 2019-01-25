@@ -9,6 +9,7 @@
 </head>
 <body>
     
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <div id="app">
     <div class="getDataButton">
@@ -17,17 +18,18 @@
       <a href="#" @click="getMlcData">最近100個資料</a>
       <a href="#" @click="getPeopleValue">現時飯堂人數</a>
     </div>
-    <h1 style="text-align:center">MLC飯堂數據</h1> 
+    <h1 style="text-align:center">MLC飯堂數據</h1>
     <ul class="data-style">
       <h1 v-if="loading">Loading...</h1>
-       <h3 v-if="showData">數據:{{items_length}}條</h3>
+      <h3 v-if="showData">數據:{{items_length}}條</h3>
+      <h3 v-if="nowPeopleValue.show">現時有{{items_length}}人在書院飯堂</h3>
       <li v-for="item in items" v-if="showData" style="display:block">
         <div class="data-block">
           <!-- <p>加密後ID : {{item.hashID}}</p> -->
-          <p>某人</p>
-          <p>居住書院 : {{item.rcMember}}</p>
+          <p>某{{item.rcMember}}同學</p>
+<!--           <p>居住書院 : {{item.rcMember}}</p> -->
           <p>食飯地點 : {{item.consumptionLocation}}</p>
-          <p>拍卡食飯時間 : {{item.consumeTime_}}</p>
+          <p>食飯時間 : {{item.consumeTime_}}</p>
           <p>類型 : {{item.mealType}}</p>
         </div>
       </li>
@@ -50,7 +52,8 @@
 	
 
 
-  .data-style{
+
+.data-style{
   list-style:none;
   
 /*   max-height:75vh;
@@ -136,6 +139,7 @@
 <script type="text/javascript">
 	
 
+
   var app = new Vue({
   el: '#app',
   data () {
@@ -144,20 +148,25 @@
       loading:false,
       showData:false,
       items_length:0,
+      nowPeopleValue:{show:false,number:0}
     }
   },
   methods:{
     testFounction:function(){
-      console.log(this.items)
+      path = this.getTimeData();
+      console.log('Here is path 0:'+path[0]);
+      console.log('Here is path 1:'+path[1]);
+      console.log('Here is path 2:'+path[2]);
     },
     getPeopleValue:function(){
       path = this.getTimeData();
-      console.log(path[1]+' and '+path[2]);
       this.getApiData('https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC&consume_date_from='+path[2]+'&consume_date_to='+path[0]);
+      this.nowPeopleValue.show = true;
     },
 // just get the recently 1 minute data
     getRecently:function() {
       path = this.getTimeData();
+      
       this.getApiData('https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC&consume_date_from='+path[1]+'&consume_date_to='+path[0]);
     },
 // just get mlc data
@@ -185,7 +194,6 @@
           _this.loading = false;
           _this.showData = true;
           _this.items_length = _this.items.length;
-          
           // console.log('Request successful', text._embedded);
         })
   //     check error
@@ -216,18 +224,20 @@
       var minutes = this.addZero(d.getMinutes());
       var seconds = this.addZero(d.getSeconds()); 
 //       full now time
-      var full_t = `${year}-${month}-${date}-T${hours}%3A${minutes}%3A${seconds}%2B08%3A00`;
+      var full_t = `${year}-${month}-${date}T${hours}%3A${minutes}%3A${seconds}%2B08%3A00`;
 //       delay time
       var delay_t = this.getDelayTime(hours,minutes,seconds,60);
-      var full_delay_t = `${year}-${month}-${date}T${delay_t[0]}%3A${delay_t[1]}%3A${delay_t[2]}%2B08%3A00`;
-      var delay_t2 = this.getDelayTime(hours,minutes,seconds,1800);
-      var full_delay_t2 = `${year}-${month}-${date}T${delay_t2[0]}%3A${delay_t2[1]}%3A${delay_t2[2]}%2B08%3A00`;
+      var full_delay_t = `${year}-${month}-${date}T${this.addZero(delay_t[0])}%3A${this.addZero(delay_t[1])}%3A${this.addZero(delay_t[2])}%2B08%3A00`;
+      
+      var delay_t2 = this.getDelayTime(hours,minutes,seconds,2100);
+      var full_delay_t2 = `${year}-${month}-${date}T${this.addZero(delay_t2[0])}%3A${this.addZero(delay_t2[1])}%3A${this.addZero(delay_t2[2])}%2B08%3A00`;
       return [full_t,full_delay_t,full_delay_t2];
     },
 //  Here is use to get the delay time
     getDelayTime:function(hour,minute,second,delay_t){
-      hour = hour *3600;
+      hour = hour * 3600;
       minute = minute * 60;
+      second = parseInt(second);//for intput second is string
       let all_count = hour + minute + second;
       all_count = all_count - delay_t;
       hour = Math.floor(all_count / 3600);      
@@ -261,7 +271,7 @@ var app1 = new Vue({
           hour_ = app.addZero(parseInt(temp[11]+temp[12]));
           minute_ = app.addZero(parseInt(temp[14]+temp[15]));
           second_ = app.addZero(parseInt(temp[17]+temp[18]));
-          
+          second_ = second_ * 1;
           all_time_ = (hour_ * 3600) + (minute_ * 60) + second_; 
           // data_obj[i] = {hour:hour,minute:minute,second=second}
           all_data[i].shorting_n = all_time_;
