@@ -10,118 +10,265 @@
 <body>
     
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <div id="app">
-    <div class="getDataButton">
-      <a href="#" @click="testFounction">測試1</a>
-      <a href="#" @click="getRecently">最近1分鐘資料</a>
-      <a href="#" @click="getMlcData">最近100個資料</a>
-      <a href="#" @click="getPeopleValue">現時飯堂人數</a>
+<div id="app">
+  <header id="header">
+    <div id="header-bar">
+      <h3>MLC飯堂</h3>
+        <a href="#" class="menu-button" @click="navBarShow = !navBarShow">
+          <div></div>
+          <div></div>
+          <div></div>
+        </a>
     </div>
-    <h1 style="text-align:center">MLC飯堂數據</h1>
-    <ul class="data-style">
-      <h1 v-if="loading">Loading...</h1>
-      <h3 v-if="showData">數據:{{items_length}}條</h3>
-      <h3 v-if="nowPeopleValue.show">現時有{{items_length}}人在書院飯堂</h3>
-      <li v-for="item in items" v-if="showData" style="display:block">
-        <div class="data-block">
-          <!-- <p>加密後ID : {{item.hashID}}</p> -->
-          <p>某{{item.rcMember}}同學</p>
-<!--           <p>居住書院 : {{item.rcMember}}</p> -->
-          <p>食飯地點 : {{item.consumptionLocation}}</p>
-          <p>食飯時間 : {{item.consumeTime_}}</p>
-          <p>類型 : {{item.mealType}}</p>
+    <nav v-show="navBarShow">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Author</a></li>
+        <li><a href="#">More Information</a></li>
+      </ul>
+    </nav>
+  </header>    
+
+
+  
+  <main id="canteen-people">
+    <section class="today-menu">
+      <img src="https://cdn3.iconfinder.com/data/icons/restaurant-34/24/menu_restaurant_food_service_3-512.png" alt="menu.png">
+      <div class="menu-info">
+        <h2>早餐菜單</h2>
+        <h4>蝦 米 腸 / 豉 油 皇 炒 麵</h4>
+        <h4>是 日 餐 粥</h4>
+        <h4>橙 汁 / 牛 奶</h4>
+        <h4>火 腿 / 烚 蛋 / 雞 肉 腸</h4>
+        <h4>多 士</h4>
+      </div>
+    </section>
+    <section class="canteen-people">
+      <div class="box-120px" >
+        <h2 style="margin:0px 14%">現時飯堂人數</h2>
+        <h1>{{items_length}}</h1>
+      </div>
+      <img :src="items_length>0 ? urlData.open : urlData.close" alt="open.jpg">
+    </section>
+    <section class="section-2">
+      <div class="queue-states">
+        <div class="box-0px">
+          <h2>排隊狀態</h2>
+          <h1>轻吞慢吐</h1>
         </div>
-      </li>
-    </ul>
+      </div>
+      <div class="weeked-all">
+        <div class="box-0px">
+          <h2>今天用餐總人數</h2>
+          <h1>30</h1>
+        </div>
+      </div>
+    </section>
+    <button @click="getFullDayPeople">123123</button>
+  </main>
   
+  <footer>
+    <p>Copyright © 2019 MLC College , University of Macau.</p>
+  </footer>
   
-  </div>
+</div>
+
   
-  <div id="app1">
-    <ul>
-      <li v-for="item in items">
-        <!-- {{item}} -->
-      </li>
-    </ul>
-  </div>
 
 
 <!-- -----------------------------------------style----------------------------------------- -->
 <style type="text/css">
 	
 
-
-
-.data-style{
-  list-style:none;
-  
-/*   max-height:75vh;
-  overflow:auto; */
-  padding:15px;
-  box-shadow:1px 1px 1px 1px #ccc;
-  border-radius:5px;
+*{
+  box-sizing:border-box;
+/*   border:1px solid hsl(0,0%,50%,.2); */
+}
+html,body{
+  margin:0;
+  padding:0;
+  font-size:12px;
+  height:100%;
 }
 
-.data-style li:hover{
-  background-color:darkgray;
+h1,h2,h3,h4,h5{
+  padding:0px;
+  margin:0px;
+}
+#app{
+  max-width:600px;
+  margin:0 auto;
+  border-left:1px solid #ccc;
+  border-right:1px solid #ccc;
+
+}
+/* header */
+header{
+  position:relative;
+  text-align:center;
+  font-size:1.7em
+}
+#header-bar{
+  padding:13px 10px;
+  border-bottom:2px solid hsl(1, 0%,50%,.2);
+}
+
+nav{
+  transition: visibility 1s, opacity 1s linear;
+  padding:13px 10px;
+  border-bottom:2px solid hsl(1, 0%,50%,.2);
+}
+
+.menu-button > div{
+  width:35px;
+  height:4px;
+  background-color:#181F21;
+  margin:5px;
+}
+.menu-button{
+  position: absolute;
+  top:10px;
+  left:10px;
+}
+
+/* nav */
+nav > ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+nav > ul > li > a{
+  display:block;
+  text-decoration:none;
+  padding:10px;
+  color:hsl(0,0%,10%);
+  border-radius:3px;
+}
+nav > ul > li > a:hover,
+nav > ul > li > a:active
+{
+  background-color:hsl(0,0%,10%);
   color:white;
 }
 
-.data-style li{
-  box-shadow:1px 1px 2px 1px #ccc;
-  padding:10px;
-  border-radius:5px;
-  margin:5px 0px;
 
-  cursor: pointer;
-}
+/* main */
 
-.data-style li > div > *{
-  padding:4px 0;
-  margin:0px;
-}
 
-.getDataButton{
-  box-shadow:1px 1px 2px 1px #ccc;
+/* section today-menu */
 
-  border-radius:1px;
-  margin:0 auto;
+section{
+  margin:20px;
+  border-radius:2px;
+  box-shadow:0 3px 6px 1px hsl(0,0%,1%,.1);
+  padding:10px 10%;
   
   display:flex;
   flex-wrap:wrap;
-  justify-content:space-around;
+  
+  justify-content: center;
+  align-items:center;
 }
 
-.getDataButton a{
-  text-decoration:none;
-  color:black;
+
+.today-menu img{
+  width:100px;
+  height:100px;
+  padding:0px;
+  
+  flex:0 1 auto;
+}
+
+.today-menu .menu-info{
+  width:calc(100% - 120px);
+  text-align:center;
+  min-width:180px;
+}
+
+.menu-info h2{
+  border-bottom:3px solid #FFCC5C;
+  margin:0px 27%;
+  padding-bottom:5px;
+}
+.menu-info h4{
+  color:hsl(0,0%,20%);
+  padding:3px 0px;
+}
+
+/* section now people value */
+.canteen-people img{
+  width:100px;
+  height:100px;
+  padding:0px;
+  flex:0 1 auto;
+}
+
+.box-120px{
+  width:calc(100% - 120px);
+  text-align:center;
+  min-width:180px;
+}
+
+.box-120px h2{
+  border-bottom:3px solid #3FA7A8;
+  margin:0px 27%;
+  padding:5px;
+}
+.box-120px h1{
+  color:hsl(0,0%,20%);
+  font-size:4em;
+}
+
+/* section queue states */
+.section-2{
+  padding:0;
+  box-shadow:none;
+}
+.section-2 > div{
+  min-width:50%;
+}
+.box-0px{
+  width:100%;
+  text-align:center;
+  min-width:180px;
+  box-shadow:0 3px 6px 1px hsl(0,0%,1%,.1);
+}
+
+.box-0px h2{
+  border-bottom:3px solid steelblue;
+  margin:0px 13%;
+  padding:5px;
+}
+.box-0px h1{
+  font-size:2em;
+  padding:16px 0px;
+  display:block;
+  
+}
+
+.weeked-all > .box-0px > h1{
+  font-size:3em;
   padding:10px;
-  font-size:1em;
+}
+.weeked-all > .box-0px > h2{
+  border-bottom:3px solid #00A368;
 }
 
 
-@media screen and (min-width:500px){
-  
+/* footer */
 
-  .data-style{
-    margin:0 auto;
-    max-width:500px;
-
-  }
-  .getDataButton button{
-    padding:10px;
-    font-size:1em;
-  }
-  
-  .getDataButton{
-    max-width:500px;
-    margin:0 auto;
-
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:space-around;
-  }
+footer{
+  border-top:1px solid hsl(0,0%,50%,.2);
+  padding:1px;
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+}
+footer > p{
+  color:hsl(0,0%,10%);
+  text-align:center;
 }
 
 </style>
@@ -138,46 +285,59 @@
 <!-- -----------------------------------------script----------------------------------------- -->
 <script type="text/javascript">
 	
+var header = new Vue({
+  el:'#header',
+  data:{
+    navBarShow:false
+  }
+})
 
 
-  var app = new Vue({
-  el: '#app',
-  data () {
-    return {
-      items: {},
-      loading:false,
-      showData:false,
-      items_length:0,
-      nowPeopleValue:{show:false,number:0}
+var app = new Vue({
+  el: '#canteen-people',
+  data:{
+    items: {},
+    loading:false,
+    check_length:false,
+    items_length:0,
+    full_day_people:0,
+    urlData:{
+      open:'https://cdn3.iconfinder.com/data/icons/restaurant-34/24/open_sign_hanger-512.png',
+      close:'https://cdn3.iconfinder.com/data/icons/restaurant-34/24/closed_sign_hanger-512.png',
     }
   },
+  mounted(){
+    this.getPeopleValue();
+    this.getFullDayPeople();
+  },
   methods:{
-    testFounction:function(){
+    getFullDayPeople:function(){
+      let count = 0;
+      console.log(this.items);
+      let api = this.fullDayApiLink(7,30,8,0);
+      this.getApiData('https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC');  
+          
+    },
+    fullDayApiLink(form1,form2,to1,to2){
       path = this.getTimeData();
-      console.log('Here is path 0:'+path[0]);
-      console.log('Here is path 1:'+path[1]);
-      console.log('Here is path 2:'+path[2]);
+      let full_api = `https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC&consume_date_from=${path[1]}T${this.addZero(form1)}%3A${this.addZero(form2)}%3A00%2B08%3A00&consume_date_to=${path[1]}T${this.addZero(to1)}%3A${this.addZero(to2)}$%3A00%2B08%3A00`;
+      console.log(full_api);
+      return full_api;
     },
     getPeopleValue:function(){
       path = this.getTimeData();
+      this.check_length = true;
       this.getApiData('https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC&consume_date_from='+path[2]+'&consume_date_to='+path[0]);
-      this.nowPeopleValue.show = true;
-    },
-// just get the recently 1 minute data
-    getRecently:function() {
-      path = this.getTimeData();
       
-      this.getApiData('https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC&consume_date_from='+path[1]+'&consume_date_to='+path[0]);
     },
-// just get mlc data
     getMlcData:function(){
- this.getApiData('https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC');
+      this.getApiData('https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC');
     },
-// 
+    
+    // here is use to get the api data--------------------------API-----------------------------
     getApiData:function(path){
       var _this = this;
       this.loading = true;
-      this.showData = false;
       fetch(path,{
         headers: {
           Authorization: 'Bearer dc441188-d713-3496-976c-953bda5520cd',
@@ -190,10 +350,13 @@
         })
         .then(function(text) {
           _this.items = text._embedded; 
-          _this.items = app1.shortingData(_this.items)
+          _this.items = my_methods.shortingData(_this.items)
           _this.loading = false;
-          _this.showData = true;
-          _this.items_length = _this.items.length;
+          if(_this.check_length){
+            _this.items_length = _this.items.length;
+            _this.check_length= false;
+          }
+
           // console.log('Request successful', text._embedded);
         })
   //     check error
@@ -206,7 +369,7 @@
           }
         });
     },
-//     Here is use to for get the zero to the time number
+  //     Here is use to for get the zero to the time number
     addZero:(number)=>{
           if(number < 10){
             let result = '0'+number
@@ -214,7 +377,7 @@
           }
             return number;
         },
-//  Here is use to get now time and delay time
+  //  Here is use to get now time and delay time
     getTimeData:function(delay_seconds){
       var d = new Date();
       var date = this.addZero(d.getDate());
@@ -223,17 +386,15 @@
       var hours = this.addZero(d.getHours());
       var minutes = this.addZero(d.getMinutes());
       var seconds = this.addZero(d.getSeconds()); 
-//       full now time
+  //       full now time
       var full_t = `${year}-${month}-${date}T${hours}%3A${minutes}%3A${seconds}%2B08%3A00`;
-//       delay time
-      var delay_t = this.getDelayTime(hours,minutes,seconds,60);
-      var full_delay_t = `${year}-${month}-${date}T${this.addZero(delay_t[0])}%3A${this.addZero(delay_t[1])}%3A${this.addZero(delay_t[2])}%2B08%3A00`;
-      
-      var delay_t2 = this.getDelayTime(hours,minutes,seconds,2100);
+      var full_d = `${year}-${month}-${date}`
+  //       delay time
+      var delay_t2 = this.getDelayTime(hours,minutes,seconds,2280);
       var full_delay_t2 = `${year}-${month}-${date}T${this.addZero(delay_t2[0])}%3A${this.addZero(delay_t2[1])}%3A${this.addZero(delay_t2[2])}%2B08%3A00`;
-      return [full_t,full_delay_t,full_delay_t2];
+      return [full_t,full_d,full_delay_t2];
     },
-//  Here is use to get the delay time
+  //  Here is use to get the delay time
     getDelayTime:function(hour,minute,second,delay_t){
       hour = hour * 3600;
       minute = minute * 60;
@@ -244,24 +405,22 @@
       minute = Math.floor(all_count % 3600 / 60);
       second = all_count % 3600 % 60;
       return[hour,minute,second];
-    }
-    
-  }
-  
-  
-})
+    }//end of delay time
+
+  },//end methods
+})//end vue
 
 
-var app1 = new Vue({
+var my_methods = new Vue({
   el:'#app1',
   data:{
   },
   methods:{
     shortingData:(all_data)=>{
       let year_,month_,day_,hour_,minute_,second_,all_time_,temp,data_obj = [];
-      
+
       for(let i = 0;i < all_data.length;i++){
-        
+
         temp = all_data[i].lastModifiedDate;
 
         for(let j = 0;j < temp.length;j++){
@@ -277,7 +436,7 @@ var app1 = new Vue({
           all_data[i].shorting_n = all_time_;
           all_data[i].consumeTime_ = `${year_}年${month_}月${day_}日${hour_}:${minute_}:${second_}`;
         }//for j end
-        
+
       }//end for i
       let count_k,count_h,change;
 
@@ -293,12 +452,10 @@ var app1 = new Vue({
       }// Here is k for end
       return all_data;
     },//shorting function end
-    
+
   }//methods end
-  
-  
-  
 })
+
 
 </script>
 
