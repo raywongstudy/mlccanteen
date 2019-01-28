@@ -8,70 +8,68 @@
   	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
+  <div id="app">
+    <header id="header">
+      <div id="header-bar">
+        <h3>MLC飯堂</h3>
+          <a href="#" class="menu-button" @click="navBarShow = !navBarShow">
+            <div></div>
+            <div></div>
+            <div></div>
+          </a>
+      </div>
+      <nav v-show="navBarShow">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Author</a></li>
+          <li><a href="#">More Information</a></li>
+        </ul>
+      </nav>
+    </header>    
+  
+  
     
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<div id="app">
-  <header id="header">
-    <div id="header-bar">
-      <h3>MLC飯堂</h3>
-        <a href="#" class="menu-button" @click="navBarShow = !navBarShow">
-          <div></div>
-          <div></div>
-          <div></div>
-        </a>
-    </div>
-    <nav v-show="navBarShow">
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About Author</a></li>
-        <li><a href="#">More Information</a></li>
-      </ul>
-    </nav>
-  </header>    
-
-
-  
-  <main id="canteen-people">
-    <section class="today-menu">
-      <img src="https://cdn3.iconfinder.com/data/icons/restaurant-34/24/menu_restaurant_food_service_3-512.png" alt="menu.png">
-      <div class="menu-info">
-        <h2>早餐菜單</h2>
-        <h4>蝦 米 腸 / 豉 油 皇 炒 麵</h4>
-        <h4>是 日 餐 粥</h4>
-        <h4>橙 汁 / 牛 奶</h4>
-        <h4>火 腿 / 烚 蛋 / 雞 肉 腸</h4>
-        <h4>多 士</h4>
-      </div>
-    </section>
-    <section class="canteen-people">
-      <div class="box-120px" >
-        <h2 style="margin:0px 14%">現時飯堂人數</h2>
-        <h1>{{items_length}}</h1>
-      </div>
-      <img :src="items_length>0 ? urlData.open : urlData.close" alt="open.jpg">
-    </section>
-    <section class="section-2">
-      <div class="queue-states">
-        <div class="box-0px">
-          <h2>排隊狀態</h2>
-          <h1>轻吞慢吐</h1>
+    <main id="canteen-people">
+      <section class="today-menu">
+        <img src="https://cdn3.iconfinder.com/data/icons/restaurant-34/24/menu_restaurant_food_service_3-512.png" alt="menu.png">
+        <div class="menu-info">
+          <h2>早餐菜單</h2>
+          <h4>蝦 米 腸 / 豉 油 皇 炒 麵</h4>
+          <h4>是 日 餐 粥</h4>
+          <h4>橙 汁 / 牛 奶</h4>
+          <h4>火 腿 / 烚 蛋 / 雞 肉 腸</h4>
+          <h4>多 士</h4>
         </div>
-      </div>
-      <div class="weeked-all">
-        <div class="box-0px">
-          <h2>今天用餐總人數</h2>
-          <h1>30</h1>
+      </section>
+      <section class="canteen-people">
+        <div class="box-120px" >
+          <h2 style="margin:0px 14%">現時飯堂人數</h2>
+          <h1>{{items_length}}</h1>
         </div>
-      </div>
-    </section>
-    <button @click="getFullDayPeople">123123</button>
-  </main>
-  
-  <footer>
-    <p>Copyright © 2019 MLC College , University of Macau.</p>
-  </footer>
-  
-</div>
+        <img :src="items_length>0 ? urlData.open : urlData.close" alt="open.jpg">
+      </section>
+      <section class="section-2">
+        <div class="queue-states">
+          <div class="box-0px">
+            <h2>排隊狀態</h2>
+            <h1>轻吞慢吐</h1>
+          </div>
+        </div>
+        <div class="weeked-all">
+          <div class="box-0px">
+            <h2>今天用餐總次數</h2>
+            <h1>{{full_day_people}}</h1>
+          </div>
+        </div>
+      </section>
+    </main>
+    
+    <footer>
+      <p>Copyright © 2019 MLC College , University of Macau.</p>
+    </footer>
+    
+  </div>
+    
 
   
 
@@ -79,8 +77,7 @@
 <!-- -----------------------------------------style----------------------------------------- -->
 <style type="text/css">
 	
-
-*{
+  *{
   box-sizing:border-box;
 /*   border:1px solid hsl(0,0%,50%,.2); */
 }
@@ -261,15 +258,16 @@ section{
 footer{
   border-top:1px solid hsl(0,0%,50%,.2);
   padding:1px;
-  position:fixed;
   bottom:0;
   left:0;
   width:100%;
+  background-color:white;
 }
 footer > p{
   color:hsl(0,0%,10%);
   text-align:center;
 }
+
 
 </style>
 
@@ -285,7 +283,7 @@ footer > p{
 <!-- -----------------------------------------script----------------------------------------- -->
 <script type="text/javascript">
 	
-var header = new Vue({
+  var header = new Vue({
   el:'#header',
   data:{
     navBarShow:false
@@ -313,16 +311,24 @@ var app = new Vue({
   methods:{
     getFullDayPeople:function(){
       let count = 0;
-      console.log(this.items);
-      let api = this.fullDayApiLink(7,30,8,0);
-      this.getApiData('https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC');  
-          
+      this.fullDayApiLink(7,30,8,30);
+      this.fullDayApiLink(8,30,9,30);
+      this.fullDayApiLink(9,30,10,0);
+//    lunch
+      this.fullDayApiLink(11,30,12,15);
+      this.fullDayApiLink(12,15,13,0);
+      this.fullDayApiLink(13,0,13,30);
+      this.fullDayApiLink(13,30,14,30);
+//    dinner
+      this.fullDayApiLink(17,30,18,15);
+      this.fullDayApiLink(18,15,19,0);
+      this.fullDayApiLink(19,0,20,0);
+      this.fullDayApiLink(20,0,20,30);
     },
     fullDayApiLink(form1,form2,to1,to2){
       path = this.getTimeData();
-      let full_api = `https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC&consume_date_from=${path[1]}T${this.addZero(form1)}%3A${this.addZero(form2)}%3A00%2B08%3A00&consume_date_to=${path[1]}T${this.addZero(to1)}%3A${this.addZero(to2)}$%3A00%2B08%3A00`;
-      console.log(full_api);
-      return full_api;
+      let full_api = `https://api.data.umac.mo/service/student/student_meal_consumption/v1.0.0/all?rc_member=MLC&consume_date_from=${path[1]}T${this.addZero(form1)}%3A${this.addZero(form2)}%3A00%2B08%3A00&consume_date_to=${path[1]}T${this.addZero(to1)}%3A${this.addZero(to2)}%3A00%2B08%3A00`;
+      this.getApiData(full_api);
     },
     getPeopleValue:function(){
       path = this.getTimeData();
@@ -349,12 +355,20 @@ var app = new Vue({
           // return response.text(); //return 的值到下一個then
         })
         .then(function(text) {
-          _this.items = text._embedded; 
-          _this.items = my_methods.shortingData(_this.items)
+          let count_items = text._embedded;
+          // _this.items = my_methods.shortingData(_this.items)
           _this.loading = false;
-          if(_this.check_length){
-            _this.items_length = _this.items.length;
+          if(_this.check_length === true){
+            _this.items_length = count_items.length;
             _this.check_length= false;
+          }else{
+            _this.items = count_items;
+            console.log('here is the full people '+_this.full_day_people);
+            console.log('here is the count people '+count_items.length);
+            _this.full_day_people += count_items.length;
+            console.log('here is the full people'+_this.full_day_people);
+            console.log(_this.full_day_people);
+            _this.check_length_all= false;
           }
 
           // console.log('Request successful', text._embedded);
@@ -455,6 +469,7 @@ var my_methods = new Vue({
 
   }//methods end
 })
+
 
 
 </script>
