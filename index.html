@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
   	<title>MLC Canteen</title>
+    <link rel="icon" href="images/home_logo.png">
   	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
   <div id="app">
@@ -70,215 +72,6 @@
     
   </div>
     
-
-  
-
-
-<!-- -----------------------------------------style----------------------------------------- -->
-<style type="text/css">
-	
-  *{
-  box-sizing:border-box;
-/*   border:1px solid hsl(0,0%,50%,.2); */
-}
-html,body{
-  margin:0;
-  padding:0;
-  font-size:12px;
-  height:100%;
-}
-
-h1,h2,h3,h4,h5{
-  padding:0px;
-  margin:0px;
-}
-#app{
-  max-width:600px;
-  margin:0 auto;
-  border-left:1px solid #ccc;
-  border-right:1px solid #ccc;
-
-}
-/* header */
-header{
-  position:relative;
-  text-align:center;
-  font-size:1.7em
-}
-#header-bar{
-  padding:13px 10px;
-  border-bottom:2px solid hsl(1, 0%,50%,.2);
-}
-
-nav{
-  transition: visibility 1s, opacity 1s linear;
-  padding:13px 10px;
-  border-bottom:2px solid hsl(1, 0%,50%,.2);
-}
-
-.menu-button > div{
-  width:35px;
-  height:4px;
-  background-color:#181F21;
-  margin:5px;
-}
-.menu-button{
-  position: absolute;
-  top:10px;
-  left:10px;
-}
-
-/* nav */
-nav > ul{
-  list-style:none;
-  padding:0;
-  margin:0;
-}
-
-nav > ul > li > a{
-  display:block;
-  text-decoration:none;
-  padding:10px;
-  color:hsl(0,0%,10%);
-  border-radius:3px;
-}
-nav > ul > li > a:hover,
-nav > ul > li > a:active
-{
-  background-color:hsl(0,0%,10%);
-  color:white;
-}
-
-
-/* main */
-
-
-/* section today-menu */
-
-section{
-  margin:20px;
-  border-radius:2px;
-  box-shadow:0 3px 6px 1px hsl(0,0%,1%,.1);
-  padding:10px 10%;
-  
-  display:flex;
-  flex-wrap:wrap;
-  
-  justify-content: center;
-  align-items:center;
-}
-
-
-.today-menu img{
-  width:100px;
-  height:100px;
-  padding:0px;
-  
-  flex:0 1 auto;
-}
-
-.today-menu .menu-info{
-  width:calc(100% - 120px);
-  text-align:center;
-  min-width:180px;
-}
-
-.menu-info h2{
-  border-bottom:3px solid #FFCC5C;
-  margin:0px 27%;
-  padding-bottom:5px;
-}
-.menu-info h4{
-  color:hsl(0,0%,20%);
-  padding:3px 0px;
-}
-
-/* section now people value */
-.canteen-people img{
-  width:100px;
-  height:100px;
-  padding:0px;
-  flex:0 1 auto;
-}
-
-.box-120px{
-  width:calc(100% - 120px);
-  text-align:center;
-  min-width:180px;
-}
-
-.box-120px h2{
-  border-bottom:3px solid #3FA7A8;
-  margin:0px 27%;
-  padding:5px;
-}
-.box-120px h1{
-  color:hsl(0,0%,20%);
-  font-size:4em;
-}
-
-/* section queue states */
-.section-2{
-  padding:0;
-  box-shadow:none;
-}
-.section-2 > div{
-  min-width:50%;
-}
-.box-0px{
-  width:100%;
-  text-align:center;
-  min-width:180px;
-  box-shadow:0 3px 6px 1px hsl(0,0%,1%,.1);
-}
-
-.box-0px h2{
-  border-bottom:3px solid steelblue;
-  margin:0px 13%;
-  padding:5px;
-}
-.box-0px h1{
-  font-size:2em;
-  padding:16px 0px;
-  display:block;
-  
-}
-
-.weeked-all > .box-0px > h1{
-  font-size:3em;
-  padding:10px;
-}
-.weeked-all > .box-0px > h2{
-  border-bottom:3px solid #00A368;
-}
-
-
-/* footer */
-
-footer{
-  border-top:1px solid hsl(0,0%,50%,.2);
-  padding:1px;
-  bottom:0;
-  left:0;
-  width:100%;
-  background-color:white;
-}
-footer > p{
-  color:hsl(0,0%,10%);
-  text-align:center;
-}
-
-
-</style>
-
-
-
-
-
-
-
-
-
 
 <!-- -----------------------------------------script----------------------------------------- -->
 <script type="text/javascript">
@@ -426,7 +219,6 @@ var app = new Vue({
 
 
 var my_methods = new Vue({
-  el:'#app1',
   data:{
   },
   methods:{
