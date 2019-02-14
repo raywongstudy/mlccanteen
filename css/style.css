@@ -198,3 +198,9 @@ footer > p{
   color:hsl(0,0%,10%);
   text-align:center;
 }
+
+@media screen and (max-width:500px){
+  footer{
+    position:relative; 
+  }
+}
