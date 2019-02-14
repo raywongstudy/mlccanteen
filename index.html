@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
   	<title>MLC Canteen</title>
     <link rel="icon" href="images/home_logo.png">
+    <meta http-equiv="Pragma" content="no-cache">
   	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
@@ -78,7 +79,7 @@
             <h1 v-if="items_length > 80">人海戰術</h1>
             <h1 v-if="items_length > 55 && items_length <= 80">人滿為患</h1>
             <h1 v-if="items_length > 30 && items_length <= 55">輕吞慢吐</h1>
-            <h1 v-if="items_length > 10 && items_length <=30">寥寥無幾</h1>
+            <h1 v-if="items_length > 0 && items_length <=30">寥寥無幾</h1>
             <h1 v-if="items_length == 0">空無一人</h1>
           </div>
         </div>
