@@ -38,7 +38,7 @@
       </section>
       <section class="today-menu">
         <img src="https://cdn3.iconfinder.com/data/icons/restaurant-34/24/menu_restaurant_food_service_3-512.png" alt="menu.png">
-        <div v-if="hours < 10" class="menu-info">
+        <div v-if="hours < 10 || hours >= 20" class="menu-info">
           <h2>早餐菜單</h2>
           <h4>豉 油 皇 炒 米 粉 / 河 粉</h4>
           <h4>是 日 餐 粥</h4>
@@ -49,20 +49,20 @@
         </div>
         <div v-if="hours >= 10 && hours < 14" class="menu-info">
           <h2>午餐菜單</h2>
-          <h4>水果</h4>
-          <h4>剁 椒 排 骨</h4>
-          <h4>小 瓜 肉 絲</h4>
-          <h4>番 茄 炒 蛋</h4>
+          <h4>水 果</h4>
+          <h4>香 草 雞 排</h4>
+          <h4>大 豆 芽 炒 肉</h4>
+          <h4>蒸 水 蛋</h4>
           <h4>時 蔬</h4>
-          <h4>五 指 毛 桃 煲 龍 骨</h4>
+          <h4>木 瓜 龍 骨 湯</h4>
         </div>
         <div v-if="hours >= 14 && hours < 20" class="menu-info">
           <h2>晚餐菜單</h2>
-          <h4>咖 喱 雞</h4>
-          <h4>酉 蘭 花 火 腿</h4>
-          <h4>肉 碎 薯 仔 絲</h4>
+          <h4>酸 甜 排 骨</h4>
+          <h4>蘿 蔔 炆 牛 腩</h4>
+          <h4>咖 哩 蒸 什 菜</h4>
           <h4>時 蔬</h4>
-          <h4>五 指 毛 桃 煲 龍 骨</h4>
+          <h4>木 瓜 龍 骨 湯</h4>
         </div>
       </section>
       <section class="canteen-people">
@@ -93,7 +93,7 @@
     </main>
     
     <footer>
-      <p>Copyright © 2019 MLC College , University of Macau.</p>
+      <p>Copyright © 2019 Ray wong , University of Macau.</p>
     </footer>
     
   </div>
