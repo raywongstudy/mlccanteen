@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  	<title>MLC Canteen</title>
+    <link rel="icon" href="images/home_logo.png">
+    <meta http-equiv="Pragma" content="no-cache">
+  	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <header id="header">
+      <div id="header-bar">
+        <h3>MLC飯堂</h3>
+          <a href="#" class="menu-button" @click="navBarShow = !navBarShow">
+            <div></div>
+            <div></div>
+            <div></div>
+          </a>
+      </div>
+      <nav v-show="navBarShow">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#">About Author</a></li>
+          <li><a href="#">More Information</a></li>
+          <li><a href="#">UM Bus Data</a></li>
+        </ul>
+      </nav>
+    </header>    
+  
+    <style type="text/css">
+      .author-section{
+      }
+      .img-cover{
+        display: inline-block;
+        flex: 1;
+        overflow: hidden;
+        padding:5px;
+      }
+      .img-cover img{
+        border-radius: 50%;
+        padding:10px;
+        width:143px;
+        height:142px;
+        object-fit: cover;
+      }
+      .img-text{
+        font-size:1.5em;
+        flex: 3;
+        padding:5px;
+      }
+      footer{
+        position: fixed;
+      }
+
+    </style>
+    
+    <main id="canteen-people">
+      <section class="author-section">
+        <div style="width:100%;font-size: 2em;border-bottom: 3px solid #4CAF50;text-align:center;font-weight: bold;padding:3px">
+          About me
+        </div>
+        <div class="img-cover">
+          <img src="https://desk-fd.zol-img.com.cn/t_s960x600c5/g5/M00/01/0F/ChMkJ1bKwlaID8U7AAVijU5Z370AALGmgHU38EABWKl095.jpg">
+        </div>
+        <div class="img-text">
+          <b>Hello I am Ray:D</b><br> &nbsp;&nbsp;Welcome to my Website and Here just for testing , if you have any problem please contact my email: darktestac@gmail.com
+        </div>
+      </section>
+      <section>
+        <div class="about" style="width:100%;font-size: 2em;border-bottom: 3px solid #2196F3;text-align:center;font-weight: bold;padding:3px">
+          Something
+        </div>
+        <div class="about-text" style="font-size: 1.6em;padding:10px;text-align: center;">
+          living in <b>MLC</b><br>
+          my major <b>CPS</b> <br>
+          Single <b>Dog</b> <br>
+          like <b>Magic</b> & <b>Design</b>
+        </div>
+      </section>
+      <section>
+        <div style="width:100%;font-size: 2em;border-bottom: 3px solid #FF5722;text-align:center;font-weight: bold;padding:3px">
+          Look Forward To
+        </div>
+        <div  style="font-size: 1.6em;padding:10px;text-align: center;">
+          Update is coming~
+        </div>
+      </section>
+    </main>
+    
+    <footer>
+      <p>Copyright © 2019 Ray wong , University of Macau.</p>
+    </footer>
+    
+  </div>
+    
+
+</body>
+
+<script type="text/javascript" src="js/script.js"></script>
+</html>
