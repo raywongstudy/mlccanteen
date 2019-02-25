@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  	<title>MLC Canteen</title>
+    <link rel="icon" href="images/home_logo.png">
+    <meta http-equiv="Pragma" content="no-cache">
+  	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+</head>
+<style type="text/css">
+  
+*{
+  box-sizing:border-box;
+}
+body{
+  margin:0;
+  padding:0;
+}
+
+.box b{
+  font-size:30px;
+  display:block;
+  margin:10px;
+}
+body{
+  display:flex;
+  width:100%;
+  height:100vh;
+}
+.container{
+  position:relative;
+  margin:auto;
+  box-shadow:0 3px 3px 3px #ccc;
+  padding:15px 40px;
+  border-radius:5px;
+
+}
+.computer{
+  font-size:3em;
+  color:#303030;
+  display:block;
+  width:80%;
+  text-align:center;
+  padding:10px;
+  margin:10px 10%;
+  border-bottom:4px solid #ed5706;
+}
+.user{
+  font-size:3em;
+  color:#303030;
+  display:block;
+  width:80%;
+  text-align:center;
+  padding:10px;
+  margin:10px 10%;
+  border-bottom:4px solid #728ef0;
+}
+.box > .button{
+  text-align:center;
+}
+
+.choise{
+  text-align:center;
+}
+
+.choise > button{
+  border:0px;
+  box-shadow:5px 5px 5px #ccc;
+  margin:10px;
+}
+
+.choise > button:hover i{
+  color:white;
+}
+.choise > button:active{
+  background-color:black;
+  color:white;
+  box-shadow:none;
+  position:relative;
+  top:3px;
+  left:3px;
+  background-color:black;
+}
+.far{
+  font-size:70px;
+  color:#484848;
+}
+
+.result{
+  font-size:30px;
+  display:block;
+  padding:20px;
+  width:270px;
+  margin:0 auto;
+  text-align:center;
+}
+
+.result-i{
+  font-size:2em;
+  color:#303030;
+  display:block;
+  width:80%;
+  text-align:center;
+  padding:10px;
+  margin:10px 10%;
+  border-bottom:3px solid #78e17d;
+}
+
+.game-topic{
+  color: #3dcbbb;
+  font-weight:bold;
+  text-align:center;
+  font-size:1.5em;
+  margin:0 -40px;
+  padding-bottom:10px;
+  border-bottom:5px solid #3dcbbb;
+}
+
+.score{
+  padding:10px;
+  text-align:center;
+}
+.score{
+  font-size:1.8em;
+}
+
+#banner{
+  width:180px;
+  background-color:red;
+  text-align:center;
+  color:white;
+  padding:10px;
+  font-size:1.5em;
+  position:absolute;
+  top:0;
+  left:-50px;
+  transform:rotate(-35deg);
+}
+.banner.display{
+  display:block;
+}
+.banner{
+  display:none;
+}
+
+</style>
+
+<body>
+
+  <div id="app">
+    <header id="header">
+      <div id="header-bar">
+        <h3>MLC飯堂</h3>
+          <a href="#" class="menu-button" @click="navBarShow = !navBarShow">
+            <div></div>
+            <div></div>
+            <div></div>
+          </a>
+      </div>
+      <nav v-show="navBarShow">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="author-page.html">About Author</a></li>
+          <li><a href="game.html">Rock Paper Scissors</a></li>
+          <li><a href="#">UM Bus Data</a></li>
+        </ul>
+      </nav>
+    </header>    
+  
+    <div class="container">
+      <div id="banner" class="banner"></div>
+      <div class="score">
+        <i id="pc-score" class="fas fa-robot pc-score"> 0 </i> : <i id="user-score" class="fas fa-user user-score"> 0 </i>
+      </div>
+      <div class="game-topic">Rock Paper Scissors Game</div>
+      <div class="box">
+        <i class="fas fa-robot computer"></i>
+        <div class="button"><i id="cpRandom" class="far fa-question-circle"></i></div>
+      </div>
+      <div class="box">
+        <i class="fas fa-user user"></i>
+        <div class="choise">
+          <button data-name="paper"><i class="far fa-hand-paper"></i></button>
+          <button data-name="peace"><i class="far fa-hand-peace"></i></button>
+          <button data-name="rock"><i class="far fa-hand-rock"></i></button>
+        </div>
+
+      </div>
+      <div class="box result">
+        <i class="fas fa-poll-h result-i"></i>
+        <span id="ans"></span>   
+      </div>
+    </div>
+    <footer>
+      <p>Copyright © 2019 Ray wong , University of Macau.</p>
+    </footer>
+    
+  </div>
+
+
+</body>
+
+
+<script type="text/javascript">
+
+$('button').on('click',function(e){
+  let $el = $(e.currentTarget);
+
+  switch($el.attr('data-name')){
+    case 'paper':
+      switch(cpRandom()){
+        case 'paper':
+          $('#ans').html("<i class='fas fa-info-circle'></i> no one win");
+          break;
+        case 'peace':
+          $('#ans').html("<i class='fas fa-robot'></i> computer win");
+          $('#pc-score').text(parseInt($('#pc-score').text())+1);
+          break;
+        case 'rock':
+          $('#ans').html("<i class='fas fa-user'></i> you win");
+          $('#user-score').text(parseInt($('#user-score').text())+1);
+          break;
+      }
+      break;
+    case 'peace':
+      switch(cpRandom()){
+        case 'paper':
+          $('#ans').html("<i class='fas fa-user'></i> you win");
+          $('#user-score').text(parseInt($('#user-score').text())+1);
+          break;
+        case 'peace':
+          $('#ans').html("<i class='fas fa-info-circle'></i> no one win");
+          break;
+        case 'rock':
+          $('#ans').html("<i class='fas fa-robot'></i> computer win");
+          $('#pc-score').text(parseInt($('#pc-score').text())+1);
+          break;
+      }
+      break;
+    case 'rock':
+      switch(cpRandom()){
+        case 'paper':
+          $('#ans').html("<i class='fas fa-robot'></i> comptuer win");
+          $('#pc-score').text(parseInt($('#pc-score').text())+1);
+          break;
+        case 'peace':
+          $('#ans').html("<i class='fas fa-user'></i> you win");
+          $('#user-score').text(parseInt($('#user-score').text())+1);
+          break;
+        case 'rock':
+          $('#ans').html("<i class='fas fa-info-circle'></i> no one win");
+          break;
+      }
+      break;
+  }
+  checkScore();
+});
+
+function cpRandom(){
+  let result = Math.floor(Math.random()*3+1);
+  switch(result){
+    case 1:
+      $('#cpRandom').removeClass('fa-hand-peace fa-hand-rock fa-question-circle').addClass('fa-hand-paper');
+      return('paper');
+      break;
+    case 2:
+      $('#cpRandom').removeClass('fa-hand-paper fa-hand-rock fa-question-circle').addClass('fa-hand-peace');
+      return('peace');
+      break;
+    case 3:
+      $('#cpRandom').removeClass('fa-hand-peace fa-hand-paper fa-question-circle').addClass('fa-hand-rock');
+      return('rock');
+      break;
+  }
+}
+
+function checkScore(){
+  let pcScore = parseInt($('#pc-score').text());
+  let userScore = parseInt($('#user-score').text());
+  if(pcScore == 3){
+    $('#banner').text('Computer Win');
+    $('#banner').addClass('display');
+    $('#user-score').text('0');
+    $('#pc-score').text('0');
+    $('#cpRandom').removeClass('fa-hand-peace fa-hand-paper fa-question-circle').addClass('fa-question-circle');
+  }else if(userScore == 3){
+    $('#banner').text('User Win');
+    $('#banner').addClass('display');
+    $('#user-score').text('0');
+    $('#pc-score').text('0');
+    $('#cpRandom').removeClass('fa-hand-peace fa-hand-paper fa-question-circle').addClass('fa-question-circle');
+  }else{
+    $('#banner').removeClass('display');
+  }
+}
+
+
+</script>
+<script type="text/javascript" src="js/script.js"></script>
+</html>
