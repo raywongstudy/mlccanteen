@@ -1,8 +1,8 @@
 // use for header nav
 var header = new Vue({
   el:'#header',
-  data:{
-    navBarShow:false
+  data:{ 
+    navBarShow:false 
   }
 })
 
@@ -72,7 +72,6 @@ var app = new Vue({
           // _this.items = my_methods.shortingData(_this.items)
           _this.items = count_items;
           _this.full_day_people += count_items.length;
-
           // console.log('Request successful', text._embedded);
         })
   //     check error
@@ -129,8 +128,11 @@ var app = new Vue({
       var full_d = `${year}-${month}-${date}`
   //       delay time
       var delay_t2 = this.getDelayTime(hours,minutes,seconds,2280);
+      // use in bus
+      var bus_delay_t = this.getDelayTime(hours,minutes,seconds,200);
       var full_delay_t2 = `${year}-${month}-${date}T${this.addZero(delay_t2[0])}%3A${this.addZero(delay_t2[1])}%3A${this.addZero(delay_t2[2])}%2B08%3A00`;
-      return [full_t,full_d,full_delay_t2];
+      var bus_delay_t_all = `${year}-${month}-${date}T${this.addZero(bus_delay_t[0])}%3A${this.addZero(bus_delay_t[1])}%3A${this.addZero(bus_delay_t[2])}%2B08%3A00`;
+      return [full_t,full_d,full_delay_t2,bus_delay_t_all];
     },
   //  Here is use to get the delay time
     getDelayTime:function(hour,minute,second,delay_t){
@@ -158,7 +160,8 @@ var my_methods = new Vue({
 
       for(let i = 0;i < all_data.length;i++){
 
-        temp = all_data[i].lastModifiedDate;
+        // temp = all_data[i].lastModifiedDate;
+        temp = all_data[i].datetime;
 
         for(let j = 0;j < temp.length;j++){
           year_ = parseInt(temp[0]+temp[1]+temp[2]+temp[3])
@@ -172,6 +175,7 @@ var my_methods = new Vue({
           // data_obj[i] = {hour:hour,minute:minute,second=second}
           all_data[i].shorting_n = all_time_;
           all_data[i].consumeTime_ = `${year_}年${month_}月${day_}日${hour_}:${minute_}:${second_}`;
+          all_data[i].bus_count_min = `${minute_}`;//use to count bus delay data
         }//for j end
 
       }//end for i
@@ -193,3 +197,79 @@ var my_methods = new Vue({
   }//methods end
 })
 
+// um bus script
+
+var bus = new Vue({
+  el:'#um-bus',
+  data:{
+    bus_datas:{},
+    now_location:{},
+    next_location:{},
+    um_location:["研究生宿舍","劉少榮樓","大學會堂","行政樓","FST","FSS","FLL","薈萃坊"],
+  },
+  mounted(){
+    let path = app.getTimeData();
+    this.getBusData('https://api.data.um.edu.mo/service/facilities/shuttle_bus_arrival_time/v1.0.0/all?date_to='+path[0]);
+  },
+  methods:{
+    getBusData:function(path){
+      var _this = this;
+      fetch(path,{
+        headers: {
+          Authorization: 'Bearer d7f8639e-4a2b-33df-aae8-93403265a260',
+          Accept: 'application/json'
+          }
+      })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(text) {
+          _this.bus_datas = my_methods.shortingData(text._embedded);
+          _this.NowBusLocation(_this.bus_datas);
+          console.log(_this.bus_datas);
+        })
+        .catch(function(error) {
+          console.log('Request failed', error);
+          if(_this.items == undefined){
+            _this.showData = true;
+          }
+        });
+    },
+    NowBusLocation(busData){
+      let busNowLocation = busData[0].station;
+      let busNowMin = busData[0].bus_count_min;
+      let busmodel = busData[0].vehiclePlateNumber;
+      // let busNowMin = 34;
+      var d = new Date();
+      var m = d.getMinutes();
+      if(busNowMin == m){
+        this.now_location = busNowLocation;
+      }else{
+        this.now_location = '服務停用/未知位置';
+        this.next_location = '服務停用/未知位置';
+      }
+      if(busNowMin != m){
+        let count = m - busNowMin;
+        if(count > 0){
+          console.log('count:'+count);
+          for(let i = 0;i < this.um_location.length; i++){
+            console.log('i:'+i);
+            console.log('1:'+this.um_location[i]);
+            console.log('2:'+busNowLocation);
+            if(this.um_location[i] == busNowLocation){
+              let count_ = (i + count) % 7;
+              this.now_location = this.um_location[i+count_];
+              this.now_location = this.um_location[i+count_+1];
+              break;
+            }
+          }
+        }
+      }else{
+        this.now_location = '服務停用/未知位置';
+        this.next_location = '服務停用/未知位置';
+      }
+    }
+
+  }
+
+})

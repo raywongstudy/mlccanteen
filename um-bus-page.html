@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  	<title>MLC Canteen</title>
+    <link rel="icon" href="images/home_logo.png">
+  	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <header id="header">
+      <div id="header-bar">
+        <h3>澳大巴士報站</h3>
+          <a href="#" class="menu-button" @click="navBarShow = !navBarShow">
+            <div></div>
+            <div></div>
+            <div></div>
+          </a>
+      </div>
+      <nav v-show="navBarShow">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="author-page.html">About Author</a></li>
+          <li><a href="game.html">Rock Paper Scissors</a></li>
+          <li><a href="um-bus-page.html">UM Bus Data</a></li>
+        </ul>
+      </nav>
+    </header>    
+  
+  
+
+    <main id="um-bus">
+      <section class="bus_location">
+        <div class="bus-topic">
+          <h1>校巴現時位置</h1>
+        </div>
+        <div class="bus-content">
+          <h5>{{now_location}}</h5>
+        </div>
+      </section>
+
+      <section class="next_location">
+        <div class="next-topic">
+          <h1>下一站</h1>
+        </div>
+        <div class="next-content">
+          <h5>{{next_location}}</h5>
+        </div>
+      </section>
+
+    </main>
+    
+    <footer>
+      <p>Copyright © 2019 MLC College , University of Macau.</p>
+    </footer>
+    
+  </div>
+    
+
+</body>
+
+<script type="text/javascript" src="js/script.js"></script>
+</html>

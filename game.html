@@ -14,6 +14,10 @@
 </head>
 <style type="text/css">
   
+#app{
+  width:100%;
+}
+
 *{
   box-sizing:border-box;
 }
@@ -74,9 +78,7 @@ body{
   margin:10px;
 }
 
-.choise > button:hover i{
-  color:white;
-}
+
 .choise > button:active{
   background-color:black;
   color:white;
@@ -164,10 +166,10 @@ body{
       </div>
       <nav v-show="navBarShow">
         <ul>
-          <li><a href="#">Home</a></li>
+          <li><a href="index.html">Home</a></li>
           <li><a href="author-page.html">About Author</a></li>
           <li><a href="game.html">Rock Paper Scissors</a></li>
-          <li><a href="#">UM Bus Data</a></li>
+          <li><a href="um-bus-page.html">UM Bus Data</a></li>
         </ul>
       </nav>
     </header>    
@@ -265,15 +267,48 @@ function cpRandom(){
   let result = Math.floor(Math.random()*3+1);
   switch(result){
     case 1:
-      $('#cpRandom').removeClass('fa-hand-peace fa-hand-rock fa-question-circle').addClass('fa-hand-paper');
+      setTimeout(function(){
+        $('#cpRandom').removeClass('fa-hand-paper fa-hand-rock fa-question-circle').addClass('fa-hand-peace');
+      },100);
+      setTimeout(function(){
+        $('#cpRandom').removeClass('fa-hand-peace fa-hand-rock fa-question-circle').addClass('fa-hand-paper');
+      },200);
+      setTimeout(function(){
+        $('#cpRandom').removeClass('fa-hand-peace fa-hand-paper fa-question-circle').addClass('fa-hand-rock');
+      },300);
+      setTimeout(function(){
+        $('#cpRandom').removeClass('fa-hand-peace fa-hand-rock fa-question-circle').addClass('fa-hand-paper');
+      },400);
       return('paper');
       break;
     case 2:
-      $('#cpRandom').removeClass('fa-hand-paper fa-hand-rock fa-question-circle').addClass('fa-hand-peace');
+      setTimeout(function(){
+        $('#cpRandom').removeClass('fa-hand-paper fa-hand-rock fa-question-circle').addClass('fa-hand-peace');
+      },100);
+      setTimeout(function(){
+        $('#cpRandom').removeClass('fa-hand-peace fa-hand-rock fa-question-circle').addClass('fa-hand-paper');
+      },200);
+      setTimeout(function(){
+        $('#cpRandom').removeClass('fa-hand-peace fa-hand-paper fa-question-circle').addClass('fa-hand-rock');
+      },300);
+      setTimeout(function(){
+        $('#cpRandom').removeClass('fa-hand-paper fa-hand-rock fa-question-circle').addClass('fa-hand-peace');
+      },400);
       return('peace');
       break;
     case 3:
-      $('#cpRandom').removeClass('fa-hand-peace fa-hand-paper fa-question-circle').addClass('fa-hand-rock');
+      setTimeout(function(){
+        $('#cpRandom').removeClass('fa-hand-paper fa-hand-rock fa-question-circle').addClass('fa-hand-peace');
+      },100);
+      setTimeout(function(){
+        $('#cpRandom').removeClass('fa-hand-peace fa-hand-paper fa-question-circle').addClass('fa-hand-rock');
+      },200);
+      setTimeout(function(){
+        $('#cpRandom').removeClass('fa-hand-peace fa-hand-rock fa-question-circle').addClass('fa-hand-paper');
+      },300);
+      setTimeout(function(){
+        $('#cpRandom').removeClass('fa-hand-peace fa-hand-paper fa-question-circle').addClass('fa-hand-rock');
+      },400);
       return('rock');
       break;
   }
@@ -287,13 +322,13 @@ function checkScore(){
     $('#banner').addClass('display');
     $('#user-score').text('0');
     $('#pc-score').text('0');
-    $('#cpRandom').removeClass('fa-hand-peace fa-hand-paper fa-question-circle').addClass('fa-question-circle');
+    // $('#cpRandom').removeClass('fa-hand-peace fa-hand-paper fa-question-circle').addClass('fa-question-circle');
   }else if(userScore == 3){
     $('#banner').text('User Win');
     $('#banner').addClass('display');
     $('#user-score').text('0');
     $('#pc-score').text('0');
-    $('#cpRandom').removeClass('fa-hand-peace fa-hand-paper fa-question-circle').addClass('fa-question-circle');
+    // $('#cpRandom').removeClass('fa-hand-peace fa-hand-paper fa-question-circle').addClass('fa-question-circle');
   }else{
     $('#banner').removeClass('display');
   }
