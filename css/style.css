@@ -204,3 +204,39 @@ footer > p{
     position:relative; 
   }
 }
+
+/*um bus style*/
+
+.bus-topic h1{
+  font-size:1.8em;
+}
+.bus_location{
+  padding:0;
+}
+.bus-topic{
+  text-align: center;
+  padding:10px;
+  width:100%;
+  border-bottom:3px solid #2196F3;
+}
+.bus-content h5{
+  padding:20px;
+  font-size: 1.7em;
+}
+
+.next-topic h1{
+  font-size:1.8em;
+}
+.next_location{
+  padding:0;
+}
+.next-topic{
+  text-align: center;
+  padding:10px;
+  width:100%;
+  border-bottom:3px solid #e91e63;
+}
+.next-content h5{
+  padding:20px;
+  font-size: 1.7em;
+}
