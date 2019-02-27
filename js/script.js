@@ -129,7 +129,7 @@ var app = new Vue({
   //       delay time
       var delay_t2 = this.getDelayTime(hours,minutes,seconds,2280);
       // use in bus
-      var bus_delay_t = this.getDelayTime(hours,minutes,seconds,200);
+      var bus_delay_t = this.getDelayTime(hours,minutes,seconds,900);
       var full_delay_t2 = `${year}-${month}-${date}T${this.addZero(delay_t2[0])}%3A${this.addZero(delay_t2[1])}%3A${this.addZero(delay_t2[2])}%2B08%3A00`;
       var bus_delay_t_all = `${year}-${month}-${date}T${this.addZero(bus_delay_t[0])}%3A${this.addZero(bus_delay_t[1])}%3A${this.addZero(bus_delay_t[2])}%2B08%3A00`;
       return [full_t,full_d,full_delay_t2,bus_delay_t_all];
@@ -206,10 +206,12 @@ var bus = new Vue({
     now_location:{},
     next_location:{},
     um_location:["研究生宿舍","劉少榮樓","大學會堂","行政樓","FST","FSS","FLL","薈萃坊"],
+    bus_model:'',
+    bus_models:["旅遊巴士(大白)","小黃巴",""],
   },
   mounted(){
     let path = app.getTimeData();
-    this.getBusData('https://api.data.um.edu.mo/service/facilities/shuttle_bus_arrival_time/v1.0.0/all?date_to='+path[0]);
+    this.getBusData('https://api.data.um.edu.mo/service/facilities/shuttle_bus_arrival_time/v1.0.0/all?date_from='+path[3]+'&date_to='+path[0]);
   },
   methods:{
     getBusData:function(path){
@@ -239,6 +241,11 @@ var bus = new Vue({
       let busNowLocation = busData[0].station;
       let busNowMin = busData[0].bus_count_min;
       let busmodel = busData[0].vehiclePlateNumber;
+      if(busmodel = "MU-78-53"){
+        this.bus_model = this.bus_models[0]; 
+      }else if(busmodel = "MW-17-18"){
+        this.bus_model = this.bus_models[1]; 
+      }
       // let busNowMin = 34;
       var d = new Date();
       var m = d.getMinutes();
@@ -250,17 +257,20 @@ var bus = new Vue({
       }
       if(busNowMin != m){
         let count = m - busNowMin;
+        let count_ = 0;
         if(count > 0){
-          console.log('count:'+count);
           for(let i = 0;i < this.um_location.length; i++){
-            console.log('i:'+i);
-            console.log('1:'+this.um_location[i]);
-            console.log('2:'+busNowLocation);
+            count_ = count + i;
             if(this.um_location[i] == busNowLocation){
-              let count_ = (i + count) % 7;
-              this.now_location = this.um_location[i+count_];
-              this.now_location = this.um_location[i+count_+1];
-              break;
+              if(count_ <= 7){
+                this.now_location = this.um_location[i+count-1];
+                this.next_location = this.um_location[i+count];
+                break;
+              }else{
+                this.now_location = '研究生宿舍(等候開車)';
+                this.next_location = '劉少榮樓';
+              }
+
             }
           }
         }

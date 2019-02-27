@@ -240,3 +240,20 @@ footer > p{
   padding:20px;
   font-size: 1.7em;
 }
+
+.bus_model h1{
+  font-size:1.8em;
+}
+.bus_model{
+  padding:0;
+}
+.model-topic{
+  text-align: center;
+  padding:10px;
+  width:100%;
+  border-bottom:3px solid #e98e1e;
+}
+.model-content h5{
+  padding:20px;
+  font-size: 1.7em;
+}
