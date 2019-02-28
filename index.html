@@ -36,6 +36,9 @@
       <section v-if="days == 5 || days == 1" class="special_meal">
         今天中午 11:30 和 12:30 有限量的特色餐提供
       </section>
+      <section style="margin:0;padding:0;box-shadow:none;height:100%;overflow: hidden">
+        <iframe src="https://www.youtube.com/embed/7pfYrkKYyOE?rel=0&amp;autoplay=1&mute=1" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+      </section>
       <section class="today-menu">
         <img src="https://cdn3.iconfinder.com/data/icons/restaurant-34/24/menu_restaurant_food_service_3-512.png" alt="menu.png">
         <div v-if="hours < 10 || hours >= 20" class="menu-info">
@@ -50,19 +53,19 @@
         <div v-if="hours >= 10 && hours < 14" class="menu-info">
           <h2>午餐菜單</h2>
           <h4>水 果</h4>
-          <h4>葡 國 雞</h4>
-          <h4>香 芹 香 干 炒 肉 片</h4>
-          <h4>南 瓜 蒸 臘 味</h4>
+          <h4>吉 列 豬 扒</h4>
+          <h4>青 瓜 炒 肉 丸</h4>
+          <h4>番 茄 炒 蛋</h4>
           <h4>時 蔬</h4>
-          <h4>番 茄 蛋 花 湯</h4>
+          <h4>海 帶 綠 豆 龍 骨 湯</h4>
         </div>
         <div v-if="hours >= 14 && hours < 20" class="menu-info">
           <h2>晚餐菜單</h2>
-          <h4>粟 米 蒸 肉 餅</h4>
-          <h4>椰 菜 粉 絲 肉 碎</h4>
-          <h4>菜 花 肉 片</h4>
+          <h4>酸 甜 排 骨</h4>
+          <h4>酸 菜 炒 花 腩</h4>
+          <h4>冬 瓜 燜 鴨</h4>
           <h4>時 蔬</h4>
-          <h4>番 茄 蛋 花 湯</h4>
+          <h4>海 帶 綠 豆 龍 骨 湯</h4>
         </div>
       </section>
       <section class="canteen-people">
