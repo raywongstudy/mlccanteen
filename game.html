@@ -170,6 +170,7 @@ body{
           <li><a href="author-page.html">About Author</a></li>
           <li><a href="game.html">Rock Paper Scissors</a></li>
           <li><a href="um-bus-page.html">UM Bus Data</a></li>
+          <li><a href="http://umsecrets.tk/">UM Secrets</a></li>
         </ul>
       </nav>
     </header>    
@@ -224,7 +225,7 @@ $('button').on('click',function(e){
           $('#pc-score').text(parseInt($('#pc-score').text())+1);
           break;
         case 'rock':
-          $('#ans').html("<i class='fas fa-user'></i> you win");
+          $('#ans').html("<i class='fas fa-user'></i> Chatherine win");
           $('#user-score').text(parseInt($('#user-score').text())+1);
           break;
       }
@@ -232,7 +233,7 @@ $('button').on('click',function(e){
     case 'peace':
       switch(cpRandom()){
         case 'paper':
-          $('#ans').html("<i class='fas fa-user'></i> you win");
+          $('#ans').html("<i class='fas fa-user'></i> Chatherine win");
           $('#user-score').text(parseInt($('#user-score').text())+1);
           break;
         case 'peace':
@@ -247,11 +248,11 @@ $('button').on('click',function(e){
     case 'rock':
       switch(cpRandom()){
         case 'paper':
-          $('#ans').html("<i class='fas fa-robot'></i> comptuer win");
+          $('#ans').html("<i class='fas fa-robot'></i> computer win");
           $('#pc-score').text(parseInt($('#pc-score').text())+1);
           break;
         case 'peace':
-          $('#ans').html("<i class='fas fa-user'></i> you win");
+          $('#ans').html("<i class='fas fa-user'></i> Chatherine win");
           $('#user-score').text(parseInt($('#user-score').text())+1);
           break;
         case 'rock':
