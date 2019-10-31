@@ -218,7 +218,7 @@ var bus = new Vue({
       var _this = this;
       fetch(path,{
         headers: {
-          Authorization: 'Bearer d7f8639e-4a2b-33df-aae8-93403265a260',
+          Authorization: 'Bearer 08baa54e-b000-32b5-b6ae-9375e04f1a0a',
           Accept: 'application/json'
           }
       })
