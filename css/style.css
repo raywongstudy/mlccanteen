@@ -39,6 +39,7 @@ nav{
 }
 
 .menu-button > div{
+  border-radius: 5px;
   width:35px;
   height:4px;
   background-color:#181F21;
@@ -48,6 +49,14 @@ nav{
   position: absolute;
   top:10px;
   left:10px;
+}
+.menu-info-btn{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.menu-info-btn > img{
+  width:35px;
 }
 
 /* nav */
@@ -78,7 +87,8 @@ nav > ul > li > a:active
   padding:0;
   background-color:#e02c2c;
   width:100%;
-  height:40px;
+  padding:5px 10px;
+  text-align: center;
   font-size:1.5em;
   color:white;
 }
@@ -86,7 +96,7 @@ nav > ul > li > a:active
 /* section today-menu */
 
 section{
-  margin:20px;
+  margin:20px 0px;
   border-radius:2px;
   box-shadow:0 3px 6px 1px hsl(0,0%,1%,.1);
   padding:10px 10%;
@@ -156,6 +166,7 @@ section{
   min-width:50%;
 }
 .box-0px{
+  height: 110px;
   width:100%;
   text-align:center;
   min-width:180px;
@@ -207,6 +218,18 @@ footer > p{
 
 /*um bus style*/
 
+#um-bus section{
+  margin:20px 10px;
+}
+.grid-x{
+  display:flex;
+}
+.grid-x > section{
+  width:50%;
+}
+#um-bus > section{
+  margin-top:10px;
+}
 .bus-topic h1{
   font-size:1.8em;
 }
@@ -221,7 +244,8 @@ footer > p{
 }
 .bus-content h5{
   padding:20px;
-  font-size: 1.7em;
+  font-size: 1.4em;
+  text-align: center;
 }
 
 .next-topic h1{
@@ -238,7 +262,8 @@ footer > p{
 }
 .next-content h5{
   padding:20px;
-  font-size: 1.7em;
+  font-size: 1.4em;
+  text-align: center;
 }
 
 .bus_model h1{
@@ -257,3 +282,93 @@ footer > p{
   padding:20px;
   font-size: 1.7em;
 }
+.bus_message{
+  color: white;
+  padding: 10px 0;
+  font-size: 1.7em;
+  background-color: #1F92F4;
+  margin: 10px 0;
+}
+.bus_message > h5{
+  text-align: center;
+}
+
+
+.macau_bus{
+  margin:20px;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  /* box-shadow:0 3px 6px 1px hsl(0,0%,1%,.1); */
+}
+.bus_input{
+  width:100%;
+  box-sizing: border-box;
+  display: flex;
+}
+.bus_input input{
+  border: 0;
+  border-radius:5px;
+  padding:10px;
+  width:80%;
+  box-shadow: 0 3px 6px 1px hsl(0,0%,1%,.1);
+  margin:0 3px;
+
+}
+.bus_input .bus_input_btn{
+  border: 0;
+  box-shadow: 0 3px 6px 1px hsl(0,0%,1%,.1);
+  padding:10px;
+  width:20%;  
+  border-radius:5px;
+  margin:0 3px;
+  
+  background-color:#1F92F4;
+  color:white
+}
+
+.bus_input .bus_input_btn:active{
+  position: relative;
+  top:2px;
+  left:2px;
+}
+.bus_lists{
+  display: flex;
+  overflow: hidden;
+  overflow-x: scroll;
+  flex-wrap:nowrap;
+  width:100%;
+  box-sizing: border-box;
+}
+.bus_list{
+  text-decoration:none;
+  cursor: pointer;
+
+  flex:0 0 auto;
+  width:33%;
+  margin:10px;
+  box-shadow: 0 3px 6px 1px hsl(0,0%,1%,.1);
+}
+.bus_list:active{
+  position: relative;
+  top:2px;
+  left:2px;
+}
+.bus_number{
+  padding:10px;
+  font-size:1.8em;
+  font-weight: bold;
+  text-align: center;
+  border-bottom:3px solid #3FA7A8;
+}
+.bus_station{
+  padding:10px;
+  font-size:1.9em;
+  text-align: center;
+  
+}
+.bus_lists::-webkit-scrollbar {
+  display: none;
+}
+

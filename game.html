@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  	<title>MLC Canteen</title>
-    <link rel="icon" href="images/home_logo.png">
+  	<title>UM Info</title>
+    <link rel="icon" href="images/uminfo_logo.png">
     <meta http-equiv="Pragma" content="no-cache">
   	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -132,16 +132,13 @@ body{
 }
 
 #banner{
-  width:180px;
+  width:100%;
   background-color:red;
   text-align:center;
   color:white;
   padding:10px;
   font-size:1.5em;
-  position:absolute;
-  top:0;
-  left:-50px;
-  transform:rotate(-35deg);
+
 }
 .banner.display{
   display:block;
@@ -163,6 +160,7 @@ body{
             <div></div>
             <div></div>
           </a>
+          <a href="#" @click="alertInfo" class="menu-info-btn"><img src="images/menu_info_logo.png" alt="info.png"></a>
       </div>
       <nav v-show="navBarShow">
         <ul>
@@ -172,6 +170,7 @@ body{
           <li><a href="cube-game.html">Cube Game</a></li>
           <li><a href="um-bus-page.html">UM Bus Data</a></li>
           <li><a href="http://umsecrets.tk/">UM Secrets</a></li>
+          
         </ul>
       </nav>
     </header>    
@@ -181,7 +180,6 @@ body{
       <div class="score">
         <i id="pc-score" class="fas fa-robot pc-score"> 0 </i> : <i id="user-score" class="fas fa-user user-score"> 0 </i>
       </div>
-      <div class="game-topic">Rock Paper Scissors Game</div>
       <div class="box">
         <i class="fas fa-robot computer"></i>
         <div class="button"><i id="cpRandom" class="far fa-question-circle"></i></div>
@@ -195,10 +193,7 @@ body{
         </div>
 
       </div>
-      <div class="box result">
-        <i class="fas fa-poll-h result-i"></i>
-        <span id="ans"></span>   
-      </div>
+
     </div>
     <footer>
       <p>Copyright © 2019 Ray wong , University of Macau.</p>
@@ -219,14 +214,11 @@ $('button').on('click',function(e){
     case 'paper':
       switch(cpRandom()){
         case 'paper':
-          $('#ans').html("<i class='fas fa-info-circle'></i> no one win");
           break;
         case 'peace':
-          $('#ans').html("<i class='fas fa-robot'></i> computer win");
           $('#pc-score').text(parseInt($('#pc-score').text())+1);
           break;
         case 'rock':
-          $('#ans').html("<i class='fas fa-user'></i> Chatherine win");
           $('#user-score').text(parseInt($('#user-score').text())+1);
           break;
       }
@@ -234,14 +226,11 @@ $('button').on('click',function(e){
     case 'peace':
       switch(cpRandom()){
         case 'paper':
-          $('#ans').html("<i class='fas fa-user'></i> Chatherine win");
           $('#user-score').text(parseInt($('#user-score').text())+1);
           break;
         case 'peace':
-          $('#ans').html("<i class='fas fa-info-circle'></i> no one win");
           break;
         case 'rock':
-          $('#ans').html("<i class='fas fa-robot'></i> computer win");
           $('#pc-score').text(parseInt($('#pc-score').text())+1);
           break;
       }
@@ -249,15 +238,12 @@ $('button').on('click',function(e){
     case 'rock':
       switch(cpRandom()){
         case 'paper':
-          $('#ans').html("<i class='fas fa-robot'></i> computer win");
           $('#pc-score').text(parseInt($('#pc-score').text())+1);
           break;
         case 'peace':
-          $('#ans').html("<i class='fas fa-user'></i> Chatherine win");
           $('#user-score').text(parseInt($('#user-score').text())+1);
           break;
         case 'rock':
-          $('#ans').html("<i class='fas fa-info-circle'></i> no one win");
           break;
       }
       break;
@@ -326,7 +312,7 @@ function checkScore(){
     $('#pc-score').text('0');
     // $('#cpRandom').removeClass('fa-hand-peace fa-hand-paper fa-question-circle').addClass('fa-question-circle');
   }else if(userScore == 3){
-    $('#banner').text('Chatherine Win');
+    $('#banner').text('User Win');
     $('#banner').addClass('display');
     $('#user-score').text('0');
     $('#pc-score').text('0');

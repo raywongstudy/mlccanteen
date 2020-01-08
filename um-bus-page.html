@@ -4,8 +4,8 @@
     <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  	<title>MLC Canteen</title>
-    <link rel="icon" href="images/home_logo.png">
+  	<title>UM Info</title>
+    <link rel="icon" href="images/uminfo_logo.png">
   	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
@@ -18,7 +18,8 @@
             <div></div>
             <div></div>
             <div></div>
-          </a>
+          </a> 
+          <a href="#" @click="alertInfo" class="menu-info-btn"><img src="images/menu_info_logo.png" alt="info.png"></a>
       </div>
       <nav v-show="navBarShow">
         <ul>
@@ -30,30 +31,55 @@
           <li><a href="http://umsecrets.tk/">UM Secrets</a></li>
         </ul>
       </nav>
-    </header>    
-  
-  
+    </header>
 
+
+    <div class="macau_bus" id="macau_bus" style="display: none;">
+      <div class="bus_input">
+        <input type="text" v-model="bus_input" placeholder="Enter the bus number" >
+        <button @click="setLocalStorage(bus_input)" class="bus_input_btn" >ADD</button>
+      </div>
+      <div class="bus_lists">
+
+        <a v-for="mbus_list in mbus_lists" class="bus_list">
+          <div class="bus_number">{{mbus_list.bus_number}}</div>
+          <div class="bus_station">{{mbus_list.bus_station}}</div>
+        </a>
+
+      </div>
+      <div class="bus_detail"></div>
+    </div>
     <main id="um-bus">
-      <section class="bus_location">
-        <div class="bus-topic">
-          <h1>校巴現時位置</h1>
-        </div>
-        <div class="bus-content">
-          <h5>{{now_location}}</h5>
-        </div>
-      </section>
 
-      <section class="next_location">
-        <div class="next-topic">
-          <h1>下一站</h1>
-        </div>
-        <div class="next-content">
-          <h5>{{next_location}}</h5>
-        </div>
+      <div class="grid-x" v-if="check_service_time">
+        <section class="bus_location">
+          <div class="bus-topic">
+            <h1>校巴現時位置</h1> 
+          </div> 
+          <div class="bus-content">
+            <h5>{{now_location}}</h5>
+          </div>
+        </section>
+  
+        <section class="next_location">
+          <div class="next-topic">
+            <h1>下一站</h1>
+          </div>
+          <div class="next-content">
+            <h5>{{next_location}}</h5>
+          </div>
+        </section>
+      </div>
+      <section class="grid-x bus_message" v-if="bus_data_message_show">
+        <h5>校巴最近在{{bus_data_message.hours}}時{{bus_data_message.minutes}}分{{bus_data_message.seconds}}秒抵達{{bus_data_message.location}}</h5>
       </section>
-
-      <section class="bus_model">
+      <section class="grid-x bus_message" v-if="check_service_time == 0" style="background-color:#f41f3c">
+        <h5>現在並不是校巴的服務時間</h5>
+      </section>
+      <section class="grid-x bus_message" v-if="bus_message_lists.show" style="background-color:#f41f3c">
+        <h5>{{bus_message_lists.message}}</h5>
+      </section>
+      <section class="bus_model" v-if="check_service_time">
         <div class="model-topic">
           <h1>巴士型號</h1>
         </div>
@@ -73,5 +99,6 @@
 
 </body>
 
-<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/bus_script.js"></script>
+<!-- <script type="text/javascript" src="js/script.js"></script> -->
 </html>

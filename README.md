@@ -1,1 +1,1 @@
-# mlccanteen
+# uminfo

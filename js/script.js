@@ -1,8 +1,23 @@
-// use for header nav
+// use for header nav 
+// if you change here you need to change the same in bus_script.js
 var header = new Vue({
   el:'#header',
   data:{ 
-    navBarShow:false 
+    navBarShow:false,
+  },
+  mounted(){
+    this.checkAlert()
+  },
+  methods:{
+    checkAlert(){
+      if (localStorage['alert_update'] == null){
+        setTimeout(function(){ alert("Uminfo.tech V0.15版本更新\n\t(1)飯堂資訊頁新logo🔥\n\t(2)飯堂資訊頁加入評論功能🤝\n\t(3)菜單將根據院生會發怖時更新🍔\n\t(4)澳大校巴報站測試版V0.2🚌\n\t(5)UM Secrets將每日更新🗃️\n\n-----作者的話-----\n大家2020新年快樂啊🎉🎉\n大家期待下次更新吧👻\nBy Ray👨🏼‍💻\n") }, 600);        
+        localStorage['alert_update'] = 'true'
+      }
+    },
+    alertInfo(){
+      alert("Uminfo.tech V0.15版本更新\n\t(1)飯堂資訊頁新logo🔥\n\t(2)飯堂資訊頁加入評論功能🤝\n\t(3)菜單將根據院生會發怖時更新🍔\n\t(4)澳大校巴報站測試版V0.2🚌\n\t(5)UM Secrets將每日更新🗃️\n\n-----作者的話-----\n大家2020新年快樂啊🎉🎉\n大家期待下次更新吧👻\nBy Ray👨🏼‍💻\n")
+    }
   }
 })
 
@@ -16,8 +31,8 @@ var app = new Vue({
     items_length:0,
     full_day_people:0,
     urlData:{
-      open:'https://cdn3.iconfinder.com/data/icons/restaurant-34/24/open_sign_hanger-512.png',
-      close:'https://cdn3.iconfinder.com/data/icons/restaurant-34/24/closed_sign_hanger-512.png',
+      open:'images/open_logo.png',
+      close:'images/closed_logo.png',
     }
   },
   mounted(){
@@ -199,87 +214,87 @@ var my_methods = new Vue({
 
 // um bus script
 
-var bus = new Vue({
-  el:'#um-bus',
-  data:{
-    bus_datas:{},
-    now_location:{},
-    next_location:{},
-    um_location:["研究生宿舍","劉少榮樓","大學會堂","行政樓","FST","FSS","FLL","薈萃坊"],
-    bus_model:'',
-    bus_models:["旅遊巴士(大白)","小黃巴",""],
-  },
-  mounted(){
-    let path = app.getTimeData();
-    this.getBusData('https://api.data.um.edu.mo/service/facilities/shuttle_bus_arrival_time/v1.0.0/all?date_from='+path[3]+'&date_to='+path[0]);
-  },
-  methods:{
-    getBusData:function(path){
-      var _this = this;
-      fetch(path,{
-        headers: {
-          Authorization: 'Bearer d779c193-af98-386d-9793-119409c66b1a',
-          Accept: 'application/json'
-          }
-      })
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(text) {
-          _this.bus_datas = my_methods.shortingData(text._embedded);
-          _this.NowBusLocation(_this.bus_datas);
-          console.log(_this.bus_datas);
-        })
-        .catch(function(error) {
-          console.log('Request failed', error);
-          if(_this.items == undefined){
-            _this.showData = true;
-          }
-        });
-    },
-    NowBusLocation(busData){
-      let busNowLocation = busData[0].station;
-      let busNowMin = busData[0].bus_count_min;
-      let busmodel = busData[0].vehiclePlateNumber;
-      if(busmodel = "MU-78-53"){
-        this.bus_model = this.bus_models[0]; 
-      }else if(busmodel = "MW-17-18"){
-        this.bus_model = this.bus_models[1]; 
-      }
-      // let busNowMin = 34;
-      var d = new Date();
-      var m = d.getMinutes();
-      if(busNowMin == m){
-        this.now_location = busNowLocation;
-      }else{
-        this.now_location = '服務停用/未知位置';
-        this.next_location = '服務停用/未知位置';
-      }
-      if(busNowMin != m){
-        let count = m - busNowMin;
-        let count_ = 0;
-        if(count > 0){
-          for(let i = 0;i < this.um_location.length; i++){
-            count_ = count + i;
-            if(this.um_location[i] == busNowLocation){
-              if(count_ <= 7){
-                this.now_location = this.um_location[i+count-1];
-                this.next_location = this.um_location[i+count];
-                break;
-              }else{
-                this.now_location = '研究生宿舍(等候開車)';
-                this.next_location = '劉少榮樓';
-              }
+// var bus = new Vue({
+//   el:'#um-bus',
+//   data:{
+//     bus_datas:{},
+//     now_location:{},
+//     next_location:{},
+//     um_location:["研究生宿舍PGH","劉少榮樓E4","大學會堂N2","行政樓N6","科技學院E11","人民社科樓E21","FLL","薈萃坊"],
+//     bus_model:'',
+//     bus_models:["大黃巴","小白巴",""],
+//   },
+//   mounted(){
+//     let path = app.getTimeData();
+//     this.getBusData('https://api.data.um.edu.mo/service/facilities/shuttle_bus_arrival_time/v1.0.0/all?date_from='+path[3]+'&date_to='+path[0]);
+//   },
+//   methods:{
+//     getBusData:function(path){
+//       var _this = this;
+//       fetch(path,{
+//         headers: {
+//           Authorization: 'Bearer d7f8639e-4a2b-33df-aae8-93403265a260',
+//           Accept: 'application/json'
+//           }
+//       })
+//         .then(function(response) {
+//           return response.json();
+//         })
+//         .then(function(text) {
+//           _this.bus_datas = my_methods.shortingData(text._embedded);
+//           _this.NowBusLocation(_this.bus_datas);
+//           console.log(_this.bus_datas);
+//         })
+//         .catch(function(error) {
+//           console.log('Request failed', error);
+//           if(_this.items == undefined){
+//             _this.showData = true;
+//           }
+//         });
+//     },
+//     NowBusLocation(busData){
+//       let busNowLocation = busData[0].station;
+//       let busNowMin = busData[0].bus_count_min;
+//       let busmodel = busData[0].vehiclePlateNumber;
+//       if(busmodel = "MU-78-53"){
+//         this.bus_model = this.bus_models[0]; 
+//       }else if(busmodel = "MW-17-18"){
+//         this.bus_model = this.bus_models[1]; 
+//       }
+//       // let busNowMin = 34;
+//       var d = new Date();
+//       var m = d.getMinutes();
+//       if(busNowMin == m){
+//         this.now_location = busNowLocation;
+//       }else{
+//         this.now_location = '服務停用/未知位置';
+//         this.next_location = '服務停用/未知位置';
+//       }
+//       if(busNowMin != m){
+//         let count = m - busNowMin;
+//         let count_ = 0;
+//         if(count > 0){
+//           for(let i = 0;i < this.um_location.length; i++){
+//             count_ = count + i;
+//             if(this.um_location[i] == busNowLocation){
+//               if(count_ <= 7){
+//                 this.now_location = this.um_location[i+count-1];
+//                 this.next_location = this.um_location[i+count];
+//                 break;
+//               }else{
+//                 this.now_location = '研究生宿舍(等候開車)';
+//                 this.next_location = '劉少榮樓';
+//               }
 
-            }
-          }
-        }
-      }else{
-        this.now_location = '服務停用/未知位置';
-        this.next_location = '服務停用/未知位置';
-      }
-    }
+//             }
+//           }
+//         }
+//       }else{
+//         this.now_location = '服務停用/未知位置';
+//         this.next_location = '服務停用/未知位置';
+//       }
+//     }
 
-  }
+//   }
 
-})
+// })

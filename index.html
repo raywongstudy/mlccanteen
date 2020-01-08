@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  	<title>MLC Canteen</title>
-    <link rel="icon" href="images/home_logo.png">
+  	<title>UM Info</title>
+    <link rel="icon" href="images/uminfo_logo.png">
     <meta http-equiv="Pragma" content="no-cache">
   	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -14,12 +14,13 @@
   <div id="app">
     <header id="header">
       <div id="header-bar">
-        <h3>MLC飯堂</h3>
+        <h3>飯堂資訊</h3>
           <a href="#" class="menu-button" @click="navBarShow = !navBarShow">
             <div></div>
             <div></div>
             <div></div>
           </a>
+          <a href="#" @click="alertInfo" class="menu-info-btn"><img src="images/menu_info_logo.png" alt="info.png"></a>
       </div>
       <nav v-show="navBarShow">
         <ul>
@@ -29,17 +30,18 @@
           <li><a href="cube-game.html">Cube Game</a></li>
           <li><a href="um-bus-page.html">UM Bus Data</a></li>
           <li><a href="http://umsecrets.tk/">UM Secrets</a></li>
+
         </ul>
       </nav>
-    </header>    
+    </header>     
   
     
     <main id="canteen-people">
       <section v-if="days == 5 || days == 1" class="special_meal">
-        今天中午 11:30 和 12:30 有限量的特色餐提供
+        中午 11:30 和 12:30 有限量的特色餐提供
       </section>
       <section class="today-menu">
-        <img src="https://cdn3.iconfinder.com/data/icons/restaurant-34/24/menu_restaurant_food_service_3-512.png" alt="menu.png">
+        <img src="images/menu_logo.png" alt="menu.png">
         <div v-if="hours < 10 || hours >= 20" class="menu-info">
           <h2>早餐菜單</h2>
           <h4>豉 油 皇 炒 米 粉 / 河 粉</h4>
@@ -51,20 +53,11 @@
         </div>
         <div v-if="hours >= 10 && hours < 14" class="menu-info">
           <h2>午餐菜單</h2>
-          <h4>水 果</h4>
-          <h4>香 草 雞 扒</h4>
-          <h4>大 豆 芽 肉 片</h4>
-          <h4>蒸 水 蛋</h4>
-          <h4>時 蔬</h4>
-          <h4>木 瓜 龍 骨 湯</h4>
+          <h1>未有資料</h1>
         </div>
         <div v-if="hours >= 14 && hours < 20" class="menu-info">
           <h2>晚餐菜單</h2>
-          <h4>咖 喱 蒸 什 菜</h4>
-          <h4>蘿 蔔 炆 牛 腩</h4>
-          <h4>酸 甜 排 骨</h4>
-          <h4>時 蔬</h4>
-          <h4>木 瓜 龍 骨 湯</h4>
+          <h1>未有資料</h1>
         </div>
       </section>
       <section class="canteen-people">
@@ -78,9 +71,9 @@
         <div class="queue-states">
           <div class="box-0px">
             <h2>排隊狀態</h2>
-            <h1 v-if="items_length > 80">人海戰術</h1>
-            <h1 v-if="items_length > 55 && items_length <= 80">人滿為患</h1>
-            <h1 v-if="items_length > 30 && items_length <= 55">輕吞慢吐</h1>
+            <h1 v-if="items_length > 80">人滿為患</h1>
+            <h1 v-if="items_length > 55 && items_length <= 80">人山人海</h1>
+            <h1 v-if="items_length > 30 && items_length <= 55">濟濟一堂</h1>
             <h1 v-if="items_length > 0 && items_length <=30">寥寥無幾</h1>
             <h1 v-if="items_length == 0">空無一人</h1>
           </div>
